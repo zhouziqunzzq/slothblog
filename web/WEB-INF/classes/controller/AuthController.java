@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Properties;
 
 public class AuthController extends HttpServlet {
@@ -34,6 +33,9 @@ public class AuthController extends HttpServlet {
             case "/auth/logout":
                 logout(request, response);
                 break;
+            case "/auth/register":
+                register(request, response);
+                break;
         }
     }
 
@@ -41,25 +43,18 @@ public class AuthController extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
-    /*    PrintWriter out = response.getWriter();
-        out.write(request.getParameter("username"));
-        out.write("\n");
-        out.write(request.getParameter("password"));
-        out.flush();
-        out.close();
-    */
         String username = request.getParameter("username");
         String passwd = request.getParameter("password");
         User u = new User(properties);
         User user = u.getUserByUsername(username);
 
-        if(user == null) {
+        if (user == null) {
             request.setAttribute("error", "用户名不存在！");
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
                     properties.getProperty("TemplatePathRoot") + "index.jsp");
             dispatcher.forward(request, response);
         } else {
-            if(BCrypt.checkpw(passwd, user.getPassword())) {
+            if (BCrypt.checkpw(passwd, user.getPassword())) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
                         properties.getProperty("TemplatePathRoot") + "index.jsp");
                 dispatcher.forward(request, response);
@@ -70,6 +65,13 @@ public class AuthController extends HttpServlet {
                 dispatcher.forward(request, response);
             }
         }
+    }
+
+    private void register(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws ServletException, IOException {
+        // TODO: Register Backend
     }
 
     private void logout(

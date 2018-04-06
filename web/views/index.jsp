@@ -16,7 +16,12 @@
 <body>
 <div class="login-wrapper">
     <h2>登录</h2>
-    <form method="post" action="auth/login">
+    <c:if test="${error != null}">
+        <div>
+            <p class="error-msg"><c:out value="${error}"/></p>
+        </div>
+    </c:if>
+    <form method="post" action="/auth/login">
         <div class="input-wrapper">
             <span class="input-tag">用户名</span>
             <input type="text" class="text-input" name="username"/>
@@ -29,12 +34,31 @@
             <button type="submit" class="login-button">登录</button>
         </div>
     </form>
-    <c:forEach items="${users}" var="user">
-        <p><c:out value="${user.id}"/></p>
-        <p><c:out value="${user.username}"/></p>
-        <p><c:out value="${user.password}"/></p>
-        <p><c:out value="${user.salt}"/></p>
-    </c:forEach>
+</div>
+<div class="login-wrapper">
+    <h2>注册</h2>
+    <c:if test="${error != null}">
+        <div>
+            <p class="error-msg"><c:out value="${error}"/></p>
+        </div>
+    </c:if>
+    <form method="post" action="/auth/register">
+        <div class="input-wrapper">
+            <span class="input-tag">用户名</span>
+            <input type="text" class="text-input" name="username"/>
+        </div>
+        <div class="input-wrapper">
+            <span class="input-tag">密码</span>
+            <input type="password" class="text-input" name="password"/>
+        </div>
+        <div class="input-wrapper">
+            <span class="input-tag">确认密码</span>
+            <input type="password" class="text-input" name="re-password"/>
+        </div>
+        <div class="input-wrapper">
+            <button type="submit" class="login-button">注册</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>
