@@ -12,6 +12,10 @@
         <servlet-name>AuthController</servlet-name>
         <servlet-class>controller.AuthController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomeController</servlet-name>
+        <servlet-class>controller.HomeController</servlet-class>
+    </servlet>
 
     <!--Routers-->
     <servlet-mapping>
@@ -21,6 +25,10 @@
     <servlet-mapping>
         <servlet-name>AuthController</servlet-name>
         <url-pattern>/auth/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeController</servlet-name>
+        <url-pattern>/user/*</url-pattern>
     </servlet-mapping>
 
     <!--Static files mapping-->

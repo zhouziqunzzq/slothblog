@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
@@ -55,9 +56,9 @@ public class AuthController extends HttpServlet {
             dispatcher.forward(request, response);
         } else {
             if (BCrypt.checkpw(passwd, user.getPassword())) {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
-                        properties.getProperty("TemplatePathRoot") + "index.jsp");
-                dispatcher.forward(request, response);
+                HttpSession session = request.getSession(true);
+                session.setAttribute("uid", user.getId());
+                response.sendRedirect("/user/" + user.getId());
             } else {
                 request.setAttribute("error", "密码错误！");
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
@@ -72,6 +73,20 @@ public class AuthController extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         // TODO: Register Backend
+        String username = request.getParameter("username");
+        String passwd = request.getParameter("password");
+        User u = new User(properties, -1, username, passwd);
+        if(u.insert() < 0) {
+            request.setAttribute("error", "注册失败！");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
+                    properties.getProperty("TemplatePathRoot") + "index.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            request.setAttribute("msg", "注册成功！请登录");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
+                    properties.getProperty("TemplatePathRoot") + "index.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     private void logout(

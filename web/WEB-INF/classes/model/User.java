@@ -59,7 +59,7 @@ public class User extends BasicModel {
         }
     }
 
-    public boolean Update() {
+    public boolean update() {
         try {
             PreparedStatement sql = getConn().prepareStatement(
                     "UPDATE `users` SET `username`=?, `password`=? " +
@@ -76,7 +76,7 @@ public class User extends BasicModel {
         }
     }
 
-    public int Insert() {
+    public int insert() {
         try {
             PreparedStatement sql = getConn().prepareStatement(
                     "INSERT INTO `users` ( `username`, `password`) " +
