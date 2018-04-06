@@ -16,13 +16,13 @@
 <body>
 <div class="login-wrapper">
     <h2>登录</h2>
-    <form method="post" action="auth/login.jsp">
+    <form method="post" action="auth/login">
         <div class="input-wrapper">
-            <span>用户名</span>
+            <span class="input-tag">用户名</span>
             <input type="text" class="text-input" name="username"/>
         </div>
         <div class="input-wrapper">
-            <span>密码</span>
+            <span class="input-tag">密码</span>
             <input type="password" class="text-input" name="password"/>
         </div>
         <button type="submit" class="login-button">登录</button>

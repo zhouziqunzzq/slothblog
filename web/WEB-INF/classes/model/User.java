@@ -16,10 +16,20 @@ public class User extends BasicModel {
 
     public User() {
         super();
+        this.id = -1;
+    }
+
+    public User(Properties properties, int id, String username, String password, String salt) {
+        super(properties);
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
     }
 
     public User(Properties properties) {
         super(properties);
+        this.id = -1;
     }
 
     public User(ResultSet resultSet) throws SQLException {
@@ -48,6 +58,50 @@ public class User extends BasicModel {
             System.out.println("Failed to get users");
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public boolean Update() {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "UPDATE `users` SET `username`=?, `password`=?, `salt`=? " +
+                            "WHERE `id`=?");
+            sql.setString(1, this.username);
+            sql.setString(2, this.password);
+            sql.setString(3, this.salt);
+            sql.setInt(4, this.id);
+
+            return sql.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println(String.format("Failed to update user(id = %d)", this.id));
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int Insert() {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "INSERT INTO `users` ( `username`, `password`, `salt` ) " +
+                            "VALUES ( ?, ?, ? )");
+            sql.setString(1, this.username);
+            sql.setString(2, this.password);
+            sql.setString(3, this.salt);
+
+            int affectedRows = sql.executeUpdate();
+            if (affectedRows > 0) {
+                ResultSet generatedKeys = sql.getGeneratedKeys();
+                this.id = generatedKeys.getInt(1);
+                return this.id;
+            } else {
+                System.out.println(String.format("Failed to update user(username = %s)", this.username));
+                return -1;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(String.format("Failed to update user(username = %s)", this.username));
+            e.printStackTrace();
+            return -1;
         }
     }
 

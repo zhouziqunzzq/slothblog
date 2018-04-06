@@ -25,7 +25,7 @@ public class IndexController extends HttpServlet {
         try {
             User user = new User(properties);
             List<User> users = user.GetUsers();
-            RequestDispatcher dispatcher = request.getRequestDispatcher(
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
                     properties.getProperty("TemplatePathRoot") + "index.jsp");
             request.setAttribute("title", properties.getProperty("WebsiteName"));
             request.setAttribute("users", users);

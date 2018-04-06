@@ -1,8 +1,7 @@
 .login-wrapper {
     margin: 0 auto;
     width: 500px;
-    border-style: solid;
-    border-width: 2px;
+    border: 2px solid;
     -webkit-border-radius: 0.5em;
     -moz-border-radius: 0.5em;
     border-radius: 0.5em;
@@ -20,8 +19,7 @@
     -webkit-border-radius: 0.3em;
     -moz-border-radius: 0.3em;
     border-radius: 0.3em;
-    display: block;
-    /*float: left;*/
+    display: inline-block;
 }
 
 .login-button {
@@ -30,5 +28,8 @@
     border-radius: 0.2em;
     margin: 0 auto;
     display: inline-block;
-    /*width: 20px;*/
+}
+
+.input-tag {
+    display: inline-block;
 }

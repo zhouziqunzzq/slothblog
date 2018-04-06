@@ -8,16 +8,27 @@
         <servlet-name>IndexController</servlet-name>
         <servlet-class>controller.IndexController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AuthController</servlet-name>
+        <servlet-class>controller.AuthController</servlet-class>
+    </servlet>
+
     <!--Routers-->
     <servlet-mapping>
         <servlet-name>IndexController</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/index</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuthController</servlet-name>
+        <url-pattern>/auth/*</url-pattern>
+    </servlet-mapping>
+
     <!--Static files mapping-->
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/static/*</url-pattern>
     </servlet-mapping>
+
     <!--JSTL-->
     <jsp-config>
         <taglib>
