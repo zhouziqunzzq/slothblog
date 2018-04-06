@@ -13,7 +13,7 @@ public class GlobalConfigHelper {
                 properties.load(servletContext.getResourceAsStream("/WEB-INF/config.properties"));
                 servletContext.setAttribute("GlobalConfig", properties);
             } catch (IOException e) {
-                System.out.println("Failed to load config.properties");
+                System.out.println("Failed to load config.properties.example");
                 e.printStackTrace();
                 System.exit(-1);
             }
