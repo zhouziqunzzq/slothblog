@@ -75,7 +75,7 @@ public class AuthController extends HttpServlet {
         // TODO: Register Backend
         String username = request.getParameter("username");
         String passwd = request.getParameter("password");
-        User u = new User(properties, -1, username, passwd);
+        User u = new User(properties, -1, username, BCrypt.hashpw(passwd, BCrypt.gensalt()));
         if(u.insert() < 0) {
             request.setAttribute("error", "注册失败！");
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(

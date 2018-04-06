@@ -7,9 +7,9 @@ public class URLHelper {
         for (int i = 0; i < url.length(); i++) {
             if (num == index) param.append(url.charAt(i));
             if (url.charAt(i) == '/') num++;
-            if (num > index) break;
         }
-        param.deleteCharAt(param.length() - 1);
+        if (num > index)
+            param.deleteCharAt(param.length() - 1);
         return param.toString();
     }
 }

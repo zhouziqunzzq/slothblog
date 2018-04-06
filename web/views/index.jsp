@@ -14,51 +14,60 @@
     <link href="${pageContext.request.contextPath}/static/css/index.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<div class="login-wrapper">
-    <h2>登录</h2>
-    <c:if test="${error != null}">
-        <div>
-            <p class="error-msg"><c:out value="${error}"/></p>
+<div class="content-container">
+    <div class="left-container">
+        <c:if test="${session.getAttribute(\"uid\") != null}">
+            <c:out value="${session.getAttribute(\"uid\")}"/>
+        </c:if>
+    </div>
+    <div class="right-container">
+        <c:if test="${error != null}">
+            <div>
+                <p class="error-msg"><c:out value="${error}"/></p>
+            </div>
+        </c:if>
+        <c:if test="${msg != null}">
+            <div>
+                <p class="msg"><c:out value="${msg}"/></p>
+            </div>
+        </c:if>
+        <div class="login-wrapper">
+            <h2>登录</h2>
+            <form method="post" action="/auth/login">
+                <div class="input-wrapper">
+                    <span class="input-tag">用户名</span>
+                    <input type="text" class="text-input" name="username"/>
+                </div>
+                <div class="input-wrapper">
+                    <span class="input-tag">密码</span>
+                    <input type="password" class="text-input" name="password"/>
+                </div>
+                <div class="input-wrapper">
+                    <button type="submit" class="login-button">登录</button>
+                </div>
+            </form>
         </div>
-    </c:if>
-    <form method="post" action="/auth/login">
-        <div class="input-wrapper">
-            <span class="input-tag">用户名</span>
-            <input type="text" class="text-input" name="username"/>
+        <div class="login-wrapper">
+            <h2>注册</h2>
+            <form method="post" action="/auth/register">
+                <div class="input-wrapper">
+                    <span class="input-tag">用户名</span>
+                    <input type="text" class="text-input" name="username"/>
+                </div>
+                <div class="input-wrapper">
+                    <span class="input-tag">密码</span>
+                    <input type="password" class="text-input" name="password"/>
+                </div>
+                <div class="input-wrapper">
+                    <span class="input-tag">确认密码</span>
+                    <input type="password" class="text-input" name="re-password"/>
+                </div>
+                <div class="input-wrapper">
+                    <button type="submit" class="login-button">注册</button>
+                </div>
+            </form>
         </div>
-        <div class="input-wrapper">
-            <span class="input-tag">密码</span>
-            <input type="password" class="text-input" name="password"/>
-        </div>
-        <div class="input-wrapper">
-            <button type="submit" class="login-button">登录</button>
-        </div>
-    </form>
-</div>
-<div class="login-wrapper">
-    <h2>注册</h2>
-    <c:if test="${error != null}">
-        <div>
-            <p class="error-msg"><c:out value="${error}"/></p>
-        </div>
-    </c:if>
-    <form method="post" action="/auth/register">
-        <div class="input-wrapper">
-            <span class="input-tag">用户名</span>
-            <input type="text" class="text-input" name="username"/>
-        </div>
-        <div class="input-wrapper">
-            <span class="input-tag">密码</span>
-            <input type="password" class="text-input" name="password"/>
-        </div>
-        <div class="input-wrapper">
-            <span class="input-tag">确认密码</span>
-            <input type="password" class="text-input" name="re-password"/>
-        </div>
-        <div class="input-wrapper">
-            <button type="submit" class="login-button">注册</button>
-        </div>
-    </form>
+    </div>
 </div>
 </body>
 </html>

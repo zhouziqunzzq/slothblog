@@ -1,10 +1,6 @@
 package model;
 
-import javax.xml.transform.Result;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -80,13 +76,14 @@ public class User extends BasicModel {
         try {
             PreparedStatement sql = getConn().prepareStatement(
                     "INSERT INTO `users` ( `username`, `password`) " +
-                            "VALUES ( ?, ?)");
+                            "VALUES ( ?, ?)", Statement.RETURN_GENERATED_KEYS);
             sql.setString(1, this.username);
             sql.setString(2, this.password);
 
             int affectedRows = sql.executeUpdate();
             if (affectedRows > 0) {
                 ResultSet generatedKeys = sql.getGeneratedKeys();
+                generatedKeys.next();
                 this.id = generatedKeys.getInt(1);
                 return this.id;
             } else {
@@ -108,7 +105,7 @@ public class User extends BasicModel {
             sql.setString(1, username);
             ResultSet rs = sql.executeQuery();
 
-            if(!rs.next()) {
+            if (!rs.next()) {
                 return null;
             } else {
                 return new User(rs);
