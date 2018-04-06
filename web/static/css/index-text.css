@@ -1,0 +1,21 @@
+.input-tag {
+    width: 3em;
+    margin-right: 1em;
+    display: inline-block;
+}
+
+.error-msg {
+    color: red;
+}
+
+.msg {
+    color: green;
+}
+
+.intro-text {
+    margin: 0.2em;
+}
+
+.main-icon {
+    color: #1da1f2;
+}

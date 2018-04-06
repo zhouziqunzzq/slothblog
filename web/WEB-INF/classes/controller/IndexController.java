@@ -27,8 +27,8 @@ public class IndexController extends HttpServlet {
             List<User> users = user.GetUsers();
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
                     properties.getProperty("TemplatePathRoot") + "index.jsp");
-            request.setAttribute("title", properties.getProperty("WebsiteName"));
-            request.setAttribute("users", users);
+//            request.setAttribute("title", properties.getProperty("WebsiteName"));
+//            request.setAttribute("users", users);
             dispatcher.forward(request, response);
         } catch (ServletException e) {
             System.out.println("Failed to dispatching jsp");

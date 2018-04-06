@@ -6,12 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="model.User" %>
+<%@ page import="util.GlobalConfigHelper" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title><c:out value="${title}"/></title>
-    <link href="${pageContext.request.contextPath}/static/css/index.css" rel="stylesheet" type="text/css"/>
+    <title><%= "首页 - " +
+            GlobalConfigHelper.getConfigFromContext(application).getProperty("WebsiteName") %>
+    </title>
+    <link href="${pageContext.request.contextPath}/static/css/index-container.css"
+          rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/static/css/index-text.css"
+          rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/static/css/index.css"
+          rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div class="content-container">
@@ -32,35 +39,31 @@
             </div>
         </c:if>
         <div class="login-wrapper">
-            <h2>登录</h2>
             <form method="post" action="/auth/login">
-                <div class="input-wrapper">
-                    <span class="input-tag">用户名</span>
-                    <input type="text" class="text-input" name="username"/>
+                <div class="inline-input-wrapper">
+                    <input type="text" class="text-input" name="username" placeholder="用户名"/>
                 </div>
-                <div class="input-wrapper">
-                    <span class="input-tag">密码</span>
-                    <input type="password" class="text-input" name="password"/>
+                <div class="inline-input-wrapper">
+                    <input type="password" class="text-input" placeholder="密码"/>
                 </div>
-                <div class="input-wrapper">
+                <div class="inline-input-wrapper">
                     <button type="submit" class="login-button">登录</button>
                 </div>
             </form>
         </div>
-        <div class="login-wrapper">
-            <h2>注册</h2>
+        <div class="register-wrapper">
+            <i class="fa fa-handshake-o fa-5x main-icon"></i>
+            <h2 class="intro-text">分享你的所想</h2>
+            <h3 class="intro-text">现在就加入SlothBlog</h3>
             <form method="post" action="/auth/register">
                 <div class="input-wrapper">
-                    <span class="input-tag">用户名</span>
-                    <input type="text" class="text-input" name="username"/>
+                    <input type="text" class="text-input" name="username" placeholder="用户名"/>
                 </div>
                 <div class="input-wrapper">
-                    <span class="input-tag">密码</span>
-                    <input type="password" class="text-input" name="password"/>
+                    <input type="password" class="text-input" name="password" placeholder="密码"/>
                 </div>
                 <div class="input-wrapper">
-                    <span class="input-tag">确认密码</span>
-                    <input type="password" class="text-input" name="re-password"/>
+                    <input type="password" class="text-input" name="re-password" placeholder="确认密码"/>
                 </div>
                 <div class="input-wrapper">
                     <button type="submit" class="login-button">注册</button>
@@ -69,5 +72,6 @@
         </div>
     </div>
 </div>
+<%@include file="include/basic-css.jsp" %>
 </body>
 </html>
