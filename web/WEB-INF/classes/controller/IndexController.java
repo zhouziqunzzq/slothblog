@@ -7,26 +7,14 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import model.User;
+import util.GlobalConfigHelper;
 
 public class IndexController extends HttpServlet {
     private Properties properties = null;
 
     @Override
     public void init() {
-        ServletContext servletContext = this.getServletContext();
-        if (servletContext.getAttribute("GlobalConfig") == null) {
-            try {
-                properties = new Properties();
-                properties.load(getServletContext().getResourceAsStream("/WEB-INF/config.properties"));
-                servletContext.setAttribute("GlobalConfig", properties);
-            } catch (IOException e) {
-                System.out.println("Failed to load config.properties");
-                e.printStackTrace();
-                System.exit(-1);
-            }
-        } else {
-            properties = (Properties) servletContext.getAttribute("GlobalConfig");
-        }
+        properties = GlobalConfigHelper.getConfigFromContext(this.getServletContext());
     }
 
     @Override

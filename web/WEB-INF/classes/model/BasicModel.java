@@ -25,7 +25,7 @@ public class BasicModel {
      */
     public Connection getConn() {
         if (conn == null) {
-            conn = DatabaseHelper.getConnection(properties);
+            conn = DatabaseHelper.getConnFromConfig(properties);
         }
         return conn;
     }

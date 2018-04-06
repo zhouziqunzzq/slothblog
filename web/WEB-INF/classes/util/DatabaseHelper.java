@@ -10,7 +10,7 @@ public class DatabaseHelper {
      * @param properties must contain four properties: DBAddress, DBName, DBUser and DBPassword.
      * @return DB Connection instance.
      */
-    public static Connection getConnection(Properties properties) {
+    public static Connection getConnFromConfig(Properties properties) {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             return DriverManager.getConnection(String.format("jdbc:mysql://%s/%s?useUnicode=true" +
