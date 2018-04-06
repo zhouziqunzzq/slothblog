@@ -1,5 +1,6 @@
 package model;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,19 +13,17 @@ public class User extends BasicModel {
     private int id;
     private String username;
     private String password;
-    private String salt;
 
     public User() {
         super();
         this.id = -1;
     }
 
-    public User(Properties properties, int id, String username, String password, String salt) {
+    public User(Properties properties, int id, String username, String password) {
         super(properties);
         this.id = id;
         this.username = username;
         this.password = password;
-        this.salt = salt;
     }
 
     public User(Properties properties) {
@@ -37,7 +36,6 @@ public class User extends BasicModel {
         id = resultSet.getInt("id");
         username = resultSet.getString("username");
         password = resultSet.getString("password");
-        salt = resultSet.getString("salt");
     }
 
     /**
@@ -64,12 +62,11 @@ public class User extends BasicModel {
     public boolean Update() {
         try {
             PreparedStatement sql = getConn().prepareStatement(
-                    "UPDATE `users` SET `username`=?, `password`=?, `salt`=? " +
+                    "UPDATE `users` SET `username`=?, `password`=? " +
                             "WHERE `id`=?");
             sql.setString(1, this.username);
             sql.setString(2, this.password);
-            sql.setString(3, this.salt);
-            sql.setInt(4, this.id);
+            sql.setInt(3, this.id);
 
             return sql.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -82,11 +79,10 @@ public class User extends BasicModel {
     public int Insert() {
         try {
             PreparedStatement sql = getConn().prepareStatement(
-                    "INSERT INTO `users` ( `username`, `password`, `salt` ) " +
-                            "VALUES ( ?, ?, ? )");
+                    "INSERT INTO `users` ( `username`, `password`) " +
+                            "VALUES ( ?, ?)");
             sql.setString(1, this.username);
             sql.setString(2, this.password);
-            sql.setString(3, this.salt);
 
             int affectedRows = sql.executeUpdate();
             if (affectedRows > 0) {
@@ -102,6 +98,26 @@ public class User extends BasicModel {
             System.out.println(String.format("Failed to update user(username = %s)", this.username));
             e.printStackTrace();
             return -1;
+        }
+    }
+
+    public User getUserByUsername(String username) {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "SELECT * FROM `users` WHERE `username` = ?");
+            sql.setString(1, username);
+            ResultSet rs = sql.executeQuery();
+
+            if(!rs.next()) {
+                return null;
+            } else {
+                return new User(rs);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Failed to get users");
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -127,14 +143,6 @@ public class User extends BasicModel {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
 }

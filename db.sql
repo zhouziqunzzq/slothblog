@@ -6,7 +6,6 @@ CREATE TABLE users
     id int NOT NULL AUTO_INCREMENT,
     username varchar(64) NOT NULL UNIQUE,
     password varchar(255) NOT NULL,
-    salt varchar(255) NOT NULL,
     PRIMARY KEY (id)
 );
 
