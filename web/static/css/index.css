@@ -1,6 +1,6 @@
 .login-wrapper {
     margin: 0 auto;
-    width: 500px;
+    max-width: 500px;
     border: 2px solid;
     -webkit-border-radius: 0.5em;
     -moz-border-radius: 0.5em;
@@ -13,6 +13,7 @@
 
 .input-wrapper {
     display: block;
+    margin-bottom: 0.2em;
 }
 
 .text-input {
@@ -26,10 +27,11 @@
     -webkit-border-radius: 0.2em;
     -moz-border-radius: 0.2em;
     border-radius: 0.2em;
-    margin: 0 auto;
-    display: inline-block;
+    display: block;
 }
 
 .input-tag {
+    width: 3em;
+    margin-right: 1em;
     display: inline-block;
 }

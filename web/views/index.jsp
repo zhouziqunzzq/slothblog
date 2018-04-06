@@ -25,7 +25,9 @@
             <span class="input-tag">密码</span>
             <input type="password" class="text-input" name="password"/>
         </div>
-        <button type="submit" class="login-button">登录</button>
+        <div class="input-wrapper">
+            <button type="submit" class="login-button">登录</button>
+        </div>
     </form>
     <c:forEach items="${users}" var="user">
         <p><c:out value="${user.id}"/></p>
