@@ -4,6 +4,24 @@ body {
     padding: 0;
 }
 
+.flex-container-column {
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.flex-container-row {
+    display: flex !important;
+    flex-direction: row !important;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .content-container {
     margin: 0 0;
     padding: 0 0;
@@ -12,30 +30,21 @@ body {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
 }
 
 .left-container {
     flex-grow: 1;
     width: 60%;
-    /*border: 2px solid;*/
-    /*-webkit-border-radius: 0.5em;*/
-    /*-moz-border-radius: 0.5em;*/
-    /*border-radius: 0.5em;*/
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 .right-container {
+    justify-content: flex-start;
+    align-content: center;
     flex-grow: 1;
     width: 40%;
-    /*border: 2px solid;*/
-    /*-webkit-border-radius: 0.5em;*/
-    /*-moz-border-radius: 0.5em;*/
-    /*border-radius: 0.5em;*/
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -46,32 +55,28 @@ body {
     box-shadow: -0.5em 0 1em #2F464E;
 }
 
-.login-wrapper {
+.login-container {
+    justify-content: center;
     margin: 0 auto 5em auto;
     padding-top: 1em;
     max-width: 90%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    /*border: 2px solid;*/
-    /*-webkit-border-radius: 0.5em;*/
-    /*-moz-border-radius: 0.5em;*/
-    /*border-radius: 0.5em;*/
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-items: center;
 }
 
-.register-wrapper {
+.message-container {
+    justify-content: center;
+    width: 100%;
+    position:absolute;
+    bottom: 2%;
+    background: #fcffb9;
+    opacity: 0.9;
+    -webkit-border-radius: 0.2em;
+    -moz-border-radius: 0.2em;
+    border-radius: 0.2em;
+}
+
+.register-container {
     margin: 0 auto;
     max-width: 50%;
-    /*border: 2px solid;*/
-    /*-webkit-border-radius: 0.5em;*/
-    /*-moz-border-radius: 0.5em;*/
-    /*border-radius: 0.5em;*/
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
 }

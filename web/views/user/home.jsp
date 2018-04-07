@@ -11,6 +11,6 @@
     <title>用户中心</title>
 </head>
 <body>
-欢迎来到用户中心
+uid = ${ sessionScope.uid }, 欢迎来到用户中心
 </body>
 </html>

@@ -1,4 +1,6 @@
 .input-wrapper {
+    display: block;
+    position: relative;
     margin: 0.8em auto;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -6,16 +8,19 @@
 }
 
 .inline-input-wrapper {
-    display: inline-block;
-    margin: 0 1em 1em 0;
+    display: inline-block !important;
+    margin: 0 1em 1em 0 !important;
 }
 
 .text-input {
+    max-width: 10em;
+    padding: 0.8em 2em 0.8em 0.8em;
     font-size: 14px;
     -webkit-border-radius: 0.3em;
     -moz-border-radius: 0.3em;
     border-radius: 0.3em;
-    display: inline-block;
+    display: block;
+    position: relative;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -26,7 +31,6 @@
     -ms-transition: border 0.4s;
     -o-transition: border 0.4s;
     transition: border 0.4s;
-    padding: 0.5em;
 }
 
 .text-input:focus {
@@ -34,8 +38,46 @@
     border: #1da1f2 solid 1px;
 }
 
-.login-button {
-    padding: 0.5em;
+.text-input-error {
+    border: red solid 1px !important;
+    -webkit-box-shadow: 0 0 0.5em red;
+    -moz-box-shadow:  0 0 0.5em red;
+    box-shadow:  0 0 0.5em red;
+}
+
+.text-input-ok {
+    border: green solid 1px !important;
+    -webkit-box-shadow: 0 0 0.5em green;
+    -moz-box-shadow:  0 0 0.5em green;
+    box-shadow:  0 0 0.5em green;
+}
+
+.text-input-longer {
+    max-width: 20em !important;
+}
+
+.error-x:after {
+    position: absolute;
+    top: 1.1em;
+    right: 1em;
+    font: normal normal normal 14px/1 FontAwesome;
+    display: inline-block;
+    content: '\f00d';
+    color: red;
+}
+
+.ok-tick:after {
+    position: absolute;
+    top: 1.1em;
+    right: 1em;
+    font: normal normal normal 14px/1 FontAwesome;
+    display: inline-block;
+    content: '\f00c';
+    color: green;
+}
+
+.basic-button {
+    /*padding: 0.95em 0.8em 0.8em 0.8em;*/
     -webkit-border-radius: 0.2em;
     -moz-border-radius: 0.2em;
     border-radius: 0.2em;
@@ -53,6 +95,15 @@
     transition: background-color 0.4s;
 }
 
-.login-button:hover {
+.basic-button:hover {
     background-color: #d6e3f2;
+}
+
+.login-button {
+    padding: 0.95em 0.8em 0.8em 0.8em;
+}
+
+.register-button {
+    padding: 0.95em 0.8em 0.8em 0.8em;
+    width: 100%;
 }
