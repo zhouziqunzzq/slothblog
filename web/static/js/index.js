@@ -108,8 +108,5 @@ $(document).ready(function () {
         checkPassword();
     });
 
-    // $("#register-submit").bind('click', function () {
-    //     checkUsername();
-    //     return false;
-    // });
+    initHeader();
 });

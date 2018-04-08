@@ -1,35 +1,20 @@
 body {
-    background: #1da1f2;
+    background: url("/static/img/pic1.jpg") 0 / cover fixed;
     margin: 0;
     padding: 0;
 }
 
-.flex-container-column {
-    display: flex !important;
-    flex-direction: column !important;
-    position: relative;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-.flex-container-row {
-    display: flex !important;
-    flex-direction: row !important;
-    position: relative;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-.content-container {
-    margin: 0 0;
-    padding: 0 0;
-    height: 100%;
-    width: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+.blur:before {
+    background: url("/static/img/pic1.jpg") 0 / cover fixed;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    filter: blur(20px);
+    margin: -30px;
+    z-index: -1;
 }
 
 .left-container {
@@ -38,6 +23,17 @@ body {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    -webkit-box-shadow: inset 0 0.2em 0.6em #2F464E;
+    -moz-box-shadow: inset 0 0.2em 0.6em #2F464E;
+    box-shadow: inset 0 0.2em 0.6em #2F464E;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.expanded {
+    width: 100% !important;
 }
 
 .right-container {
@@ -45,11 +41,11 @@ body {
     align-content: center;
     flex-grow: 1;
     width: 40%;
+    overflow: hidden;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    background: #ffffff;
-    opacity: 0.95;
+    /*background: rgba(197, 196, 196, 0.31);*/
     -webkit-box-shadow: -0.5em 0 1em #2F464E;
     -moz-box-shadow: -0.5em 0 1em #2F464E;
     box-shadow: -0.5em 0 1em #2F464E;
@@ -66,7 +62,7 @@ body {
 .message-container {
     justify-content: center;
     width: 100%;
-    position:absolute;
+    position: absolute !important;
     bottom: 2%;
     background: #fcffb9;
     opacity: 0.9;

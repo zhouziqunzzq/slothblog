@@ -27,7 +27,13 @@ public class AuthController extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        response.sendRedirect("/");
+        switch (request.getRequestURI()) {
+            case "/auth/logout":
+                logout(request, response);
+                break;
+            default:
+                response.sendRedirect("/");
+        }
     }
 
     @Override
@@ -38,9 +44,6 @@ public class AuthController extends HttpServlet {
         switch (request.getRequestURI()) {
             case "/auth/login":
                 login(request, response);
-                break;
-            case "/auth/logout":
-                logout(request, response);
                 break;
             case "/auth/register":
                 register(request, response);

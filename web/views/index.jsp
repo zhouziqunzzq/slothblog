@@ -21,20 +21,25 @@
           rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<%--Header--%>
+<jsp:include page="components/header.jsp" flush="true">
+    <jsp:param name="selected" value="index"/>
+</jsp:include>
+<%--Content--%>
 <div class="flex-container-row content-container">
-    <div class="flex-container-column left-container">
-        <c:if test="${session.getAttribute(\"uid\") != null}">
-            <c:out value="${session.getAttribute(\"uid\")}"/>
+    <div class="flex-container-column left-container ${ sessionScope.uid != null ? "expanded" : "" }">
+        <c:if test="${sessionScope.uid != null}">
+            <c:out value="${sessionScope.uid}"/>
         </c:if>
     </div>
-    <div class="flex-container-column right-container">
+    <div class="${ sessionScope.uid != null ? "hidden" : "flex-container-column right-container blur" }">
         <%--Inline Login Component--%>
         <jsp:include page="components/inline-login.jsp" flush="true">
             <jsp:param name="error_type" value="${ error_type }"/>
         </jsp:include>
         <div class="flex-container-row message-container">
-            <p id="error-msg" class="error-msg" style="display: none;"><c:out value="${error}"/></p>
-            <p id="msg" class="msg" style="display: none;"><c:out value="${msg}"/></p>
+            <p id="error-msg" class="error-msg" style="display: none;"></p>
+            <p id="msg" class="msg" style="display: none;"></p>
             <c:if test="${error != null}">
                 <p class="error-msg"><c:out value="${error}"/></p>
             </c:if>

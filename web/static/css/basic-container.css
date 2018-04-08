@@ -1,0 +1,27 @@
+.flex-container-column {
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.flex-container-row {
+    display: flex !important;
+    flex-direction: row !important;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.content-container {
+    margin: 0 0;
+    padding: 42px 0 0 0;
+    height: 100%;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
