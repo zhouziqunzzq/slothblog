@@ -50,7 +50,7 @@
 <%--Dropdown menu--%>
 <div id="user-dropdown" class="jq-dropdown jq-dropdown-anchor-right">
     <div class="jq-dropdown-panel flex-container-column dropdown-container blur">
-        <a href="#" class="flex-container-row dropdown-item">
+        <a href="/user/${ sessionScope.uid }" class="flex-container-row dropdown-item">
             <div>
                 <i class="fa fa-rss fa-fw"></i>我的博客
             </div>

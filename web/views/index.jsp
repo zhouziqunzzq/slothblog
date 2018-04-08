@@ -27,10 +27,9 @@
 </jsp:include>
 <%--Content--%>
 <div class="flex-container-row content-container">
-    <div class="flex-container-column left-container ${ sessionScope.uid != null ? "expanded" : "" }">
-        <c:if test="${sessionScope.uid != null}">
-            <c:out value="${sessionScope.uid}"/>
-        </c:if>
+    <div class="flex-container-column left-container
+        ${ sessionScope.uid != null ? "expanded left-container-no-shadow" : "" }">
+        <jsp:include page="components/articles.jsp"/>
     </div>
     <div class="${ sessionScope.uid != null ? "hidden" : "flex-container-column right-container blur" }">
         <%--Inline Login Component--%>

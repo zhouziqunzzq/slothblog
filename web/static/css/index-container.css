@@ -28,6 +28,12 @@ body {
     box-shadow: inset 0 0.2em 0.6em #2F464E;
 }
 
+.left-container-no-shadow {
+    -webkit-box-shadow: 0 0 0 #2F464E !important;
+    -moz-box-shadow: 0 0 0 #2F464E !important;
+    box-shadow: 0 0 0 #2F464E !important;
+}
+
 .hidden {
     display: none !important;
 }
