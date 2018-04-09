@@ -19,6 +19,8 @@
           rel="stylesheet" type="text/css"/>
     <link href="${pageContext.request.contextPath}/static/css/index.css"
           rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/static/css/article.css"
+          rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <%--Header--%>

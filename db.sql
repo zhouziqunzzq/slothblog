@@ -7,7 +7,9 @@ CREATE TABLE users
   username varchar(64)  NOT NULL UNIQUE,
   password varchar(255) NOT NULL,
   PRIMARY KEY (id)
-);
+)
+  CHARACTER SET utf8
+  COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS user_info;
 CREATE TABLE user_info (
@@ -19,7 +21,9 @@ CREATE TABLE user_info (
   intro    text,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users (id)
-);
+)
+  CHARACTER SET utf8
+  COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS articles;
 CREATE TABLE articles (
@@ -30,7 +34,9 @@ CREATE TABLE articles (
   created_at timestamp    NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users (id)
-);
+)
+  CHARACTER SET utf8
+  COLLATE utf8_general_ci;
 CREATE INDEX articles_index
   ON articles (title);
 
@@ -40,7 +46,9 @@ CREATE TABLE tags (
   name  varchar(100) NOT NULL UNIQUE,
   count int          NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
-);
+)
+  CHARACTER SET utf8
+  COLLATE utf8_general_ci;
 CREATE UNIQUE INDEX tags_index
   ON tags (name);
 
@@ -52,7 +60,9 @@ CREATE TABLE users_tags (
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users (id),
   FOREIGN KEY (tag_id) REFERENCES tags (id)
-);
+)
+  CHARACTER SET utf8
+  COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS articles_tags;
 CREATE TABLE articles_tags (
@@ -62,7 +72,9 @@ CREATE TABLE articles_tags (
   PRIMARY KEY (id),
   FOREIGN KEY (article_id) REFERENCES articles (id),
   FOREIGN KEY (tag_id) REFERENCES tags (id)
-);
+)
+  CHARACTER SET utf8
+  COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS comments;
 CREATE TABLE comments (
@@ -74,7 +86,9 @@ CREATE TABLE comments (
   PRIMARY KEY (id),
   FOREIGN KEY (article_id) REFERENCES articles (id),
   FOREIGN KEY (user_id) REFERENCES users (id)
-);
+)
+  CHARACTER SET utf8
+  COLLATE utf8_general_ci;
 CREATE INDEX comments_index
   ON comments (article_id);
 

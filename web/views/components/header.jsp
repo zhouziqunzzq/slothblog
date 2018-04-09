@@ -27,7 +27,7 @@
         <div class="flex-container-row search-container">
             <form class="flex-container-row search-container">
                 <input type="text" class="search-input" placeholder="搜索文章或用户..."/>
-                <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
+                <button type="submit" class="search-button"><i class="fa fa-yelp"></i></button>
             </form>
         </div>
         <%--User--%>
