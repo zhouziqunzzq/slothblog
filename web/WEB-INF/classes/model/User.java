@@ -76,7 +76,7 @@ public class User extends BasicModel {
         try {
             PreparedStatement sql = getConn().prepareStatement(
                     "INSERT INTO `users` ( `username`, `password`) " +
-                            "VALUES ( ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                            "VALUES ( ?, ? )", Statement.RETURN_GENERATED_KEYS);
             sql.setString(1, this.username);
             sql.setString(2, this.password);
 
@@ -87,12 +87,12 @@ public class User extends BasicModel {
                 this.id = generatedKeys.getInt(1);
                 return this.id;
             } else {
-                System.out.println(String.format("Failed to update user(username = %s)", this.username));
+                System.out.println(String.format("Failed to insert user(username = %s)", this.username));
                 return -1;
             }
 
         } catch (SQLException e) {
-            System.out.println(String.format("Failed to update user(username = %s)", this.username));
+            System.out.println(String.format("Failed to insert user(username = %s)", this.username));
             e.printStackTrace();
             return -1;
         }
