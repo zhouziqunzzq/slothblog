@@ -1,9 +1,6 @@
 package model;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -66,6 +63,33 @@ public class Article extends BasicModel {
             System.out.println("Failed to get articles");
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public int insert() {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "INSERT INTO `articles` ( `user_id`, `title`, `content`) " +
+                            "VALUES ( ?, ?, ? )", Statement.RETURN_GENERATED_KEYS);
+            sql.setInt(1, this.user_id);
+            sql.setString(2, this.title);
+            sql.setString(3, this.content);
+
+            int affectedRows = sql.executeUpdate();
+            if (affectedRows > 0) {
+                ResultSet generatedKeys = sql.getGeneratedKeys();
+                generatedKeys.next();
+                this.id = generatedKeys.getInt(1);
+                return this.id;
+            } else {
+                System.out.println(String.format("Failed to post article (uid = %s, title = %s)", this.user_id, this.title));
+                return -1;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(String.format("Failed to post article (uid = %s, title = %s)", this.user_id, this.title));
+            e.printStackTrace();
+            return -1;
         }
     }
 

@@ -16,6 +16,10 @@
         <servlet-name>HomeController</servlet-name>
         <servlet-class>controller.HomeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ArticleController</servlet-name>
+        <servlet-class>controller.ArticleController</servlet-class>
+    </servlet>
 
     <!--Routers-->
     <servlet-mapping>
@@ -29,6 +33,10 @@
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/user/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ArticleController</servlet-name>
+        <url-pattern>/article</url-pattern>
     </servlet-mapping>
 
     <!--Static files mapping-->

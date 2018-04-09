@@ -28,6 +28,11 @@
 <%--Content--%>
 <div class="flex-container-row content-container">
     <%--TODO--%>
+    <form method="post" action="/user/${ sessionScope.uid }/article">
+        <input type="text" name="title"/>
+        <textarea name="content"></textarea>
+        <button type="submit">发送</button>
+    </form>
 </div>
 <%@include file="../include/basic-css.jsp" %>
 <%@include file="../include/basic-js.jsp" %>
