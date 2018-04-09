@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.deploy.net.HttpResponse;
 import model.User;
 import util.GlobalConfigHelper;
 import util.BCrypt;

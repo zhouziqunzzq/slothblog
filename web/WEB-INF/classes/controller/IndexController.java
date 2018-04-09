@@ -6,11 +6,12 @@ import java.util.Properties;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import model.User;
+import model.Article;
 import util.GlobalConfigHelper;
 
 public class IndexController extends HttpServlet {
     private Properties properties = null;
+    public static int perPageArticles = 10;
 
     @Override
     public void init() {
@@ -23,6 +24,11 @@ public class IndexController extends HttpServlet {
             HttpServletResponse response
     ) {
         try {
+            // Get latest articles
+            Article article = new Article(properties);
+            List<Article> articles = article.getLatestArticles(1, perPageArticles);
+            request.setAttribute("articles", articles);
+            // Render index View
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
                     properties.getProperty("TemplatePathRoot") + "index.jsp");
             dispatcher.forward(request, response);
