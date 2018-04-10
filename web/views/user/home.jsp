@@ -33,6 +33,17 @@
         <textarea name="content"></textarea>
         <button type="submit">发送</button>
     </form>
+    <div class="flex-container-column left-container
+        ${ sessionScope.uid != null ? "expanded left-container-no-shadow" : "" }">
+        <c:set var="articles" value="${ articles }" scope="request"/>
+        <c:forEach items="${ requestScope.articles }" var="article">
+            <div>
+                <h3>${ article.title }</h3>
+                <i>${ article.created_at }</i>
+                <p>${ article.content }</p>
+            </div>
+        </c:forEach>
+    </div>
 </div>
 <%@include file="../include/basic-css.jsp" %>
 <%@include file="../include/basic-js.jsp" %>

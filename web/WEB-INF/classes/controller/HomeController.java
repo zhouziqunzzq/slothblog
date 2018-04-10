@@ -1,5 +1,6 @@
 package controller;
 
+import model.Article;
 import util.GlobalConfigHelper;
 import util.URLHelper;
 
@@ -9,10 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 public class HomeController extends HttpServlet {
     private Properties properties = null;
+    public static int perPageArticles = 10;
 
     @Override
     public void init() {
@@ -24,9 +27,12 @@ public class HomeController extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
-        int uid = Integer.parseInt(URLHelper.getRouterParam(request.getRequestURI(), 2));
+        Article article = new Article(properties);
+        int uid = (int)request.getSession().getAttribute("uid");
+        List<Article> articles = article.getArticlesByUserId(uid,1, perPageArticles);
+        request.setAttribute("articles", articles);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
-                properties.getProperty("TemplatePathRoot") + "user/home.jsp");
+                properties.getProperty("TemplatePathRoot") + "/user/home.jsp");
         dispatcher.forward(request, response);
     }
 

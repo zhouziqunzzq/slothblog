@@ -93,6 +93,27 @@ public class Article extends BasicModel {
         }
     }
 
+    public List<Article> getArticlesByUserId(int uid, int curpage, int perpage) {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "SELECT * FROM `articles` WHERE `user_id`=?" +
+                    " ORDER BY `created_at` DESC LIMIT ?,?");
+            sql.setInt(1, uid);
+            sql.setInt(2, (curpage - 1) * perpage);
+            sql.setInt(3, perpage);
+            ResultSet resultSet = sql.executeQuery();
+            List<Article> articles = new ArrayList<>();
+            while (resultSet.next()) {
+                articles.add(new Article(resultSet));
+            }
+            return articles;
+        } catch (SQLException e) {
+            System.out.println("Failed to get articles");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public int getId() {
         return id;
     }
