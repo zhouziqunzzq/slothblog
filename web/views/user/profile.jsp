@@ -25,7 +25,7 @@
 <body>
 <%--Header--%>
 <jsp:include page="../components/header.jsp" flush="true">
-    <jsp:param name="selected" value="index"/>
+    <jsp:param name="selected" value="profile"/>
 </jsp:include>
 <%--Content--%>
 <div class="flex-container-row content-container">
