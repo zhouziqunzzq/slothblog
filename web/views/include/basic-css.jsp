@@ -16,3 +16,5 @@
       rel="stylesheet" type="text/css"/>
 <link href="${pageContext.request.contextPath}/static/css/avatar.css"
       rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/static/css/new_article.css"
+      rel="stylesheet" type="text/css"/>

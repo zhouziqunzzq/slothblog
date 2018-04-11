@@ -36,7 +36,7 @@
         </c:if>
         <c:if test="${ sessionScope.uid != null }">
             <div class="flex-container-row user-tooltip-container">
-                <a class="flex-container-row new-article-tooltip" href="#">
+                <a class="flex-container-row new-article-tooltip" href="#" id="new-article-tooltip">
                     <i class="fa fa-plus flex-container-row new-article-tooltip"
                        title="发布博文"></i>
                 </a>
@@ -67,3 +67,8 @@
         </a>
     </div>
 </div>
+<%--New article popup--%>
+<%--Header--%>
+<jsp:include page="new_article.jsp" flush="true">
+    <jsp:param name="selected" value="index"/>
+</jsp:include>

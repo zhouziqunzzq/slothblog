@@ -11,3 +11,4 @@
 <script src="https://cdn.bootcss.com/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery-dropdown/2.0.3/jquery.dropdown.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/js/header.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/new-article-popper.js"></script>
