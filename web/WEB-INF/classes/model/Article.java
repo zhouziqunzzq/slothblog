@@ -11,6 +11,7 @@ public class Article extends BasicModel {
     private String title;
     private String content;
     private java.sql.Timestamp created_at;
+    private List<Tag> tags;
 
     public Article() {
         super();
@@ -103,14 +104,57 @@ public class Article extends BasicModel {
             sql.setInt(3, perpage);
             ResultSet resultSet = sql.executeQuery();
             List<Article> articles = new ArrayList<>();
+            Article article;
             while (resultSet.next()) {
-                articles.add(new Article(resultSet));
+                article = new Article(resultSet);
+                article.setTags(getTagsByArticleId(resultSet.getInt("id")));
+                articles.add(article);
             }
             return articles;
         } catch (SQLException e) {
             System.out.println("Failed to get articles");
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public List<Tag> getTagsByArticleId(int articleId) {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "SELECT tags.* FROM `articles_tags`, `tags`" +
+                            "WHERE `article_id`=? AND articles_tags.tag_id=tags.id");
+            sql.setInt(1, articleId);
+            ResultSet rs = sql.executeQuery();
+            List<Tag> tags = new ArrayList<>();
+            while (rs.next()) {
+                tags.add(new Tag(rs));
+            }
+            System.out.println("successful");
+            return tags;
+        } catch (SQLException e) {
+            System.out.println("Failed to get tags");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean link (List<Integer> tagIdList) {
+        try {
+            boolean flag = true;
+            for(int i = 0; i < tagIdList.size(); i++) {
+                int tagId = tagIdList.get(i);
+                PreparedStatement sql = getConn().prepareStatement(
+                        "INSERT INTO `articles_tags` ( `article_id`, `tag_id`) " +
+                                "VALUES ( ?, ? )", Statement.RETURN_GENERATED_KEYS);
+                sql.setInt(1, this.id);
+                sql.setInt(2, tagId);
+                if(sql.executeUpdate() <= 0) flag = false;
+            }
+            return flag;
+        } catch (SQLException e) {
+            System.out.println("Failed to link tags");
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -153,4 +197,8 @@ public class Article extends BasicModel {
     public void setCreated_at(Timestamp timestamp) {
         this.created_at = timestamp;
     }
+
+    public List<Tag> getTags() { return tags; }
+
+    public void setTags(List<Tag> tags) { this.tags = tags; }
 }
