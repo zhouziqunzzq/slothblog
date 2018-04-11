@@ -27,13 +27,33 @@ public class HomeController extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
-        Article article = new Article(properties);
-        int uid = (int)request.getSession().getAttribute("uid");
-        List<Article> articles = article.getArticlesByUserId(uid,1, perPageArticles);
-        request.setAttribute("articles", articles);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
-                properties.getProperty("TemplatePathRoot") + "/user/home.jsp");
-        dispatcher.forward(request, response);
+        int uid = (int) request.getSession().getAttribute("uid");
+        String subrouter = URLHelper.getRouterParam(request.getRequestURI(), 3);
+        if (subrouter.equals("")) {
+            // Show User Home Index
+            Article article = new Article(properties);
+            List<Article> articles = article.getArticlesByUserId(uid, 1, perPageArticles);
+            request.setAttribute("articles", articles);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
+                    properties.getProperty("TemplatePathRoot") + "/user/home.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            switch (subrouter) {
+                case "profile":
+                    try {
+                        request.setAttribute("targetUid", Integer.parseInt(
+                                URLHelper.getRouterParam(request.getRequestURI(), 2)));
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid uid " +
+                                URLHelper.getRouterParam(request.getRequestURI(), 2));
+                        e.printStackTrace();
+                        request.setAttribute("targetUid", null);
+                    }
+                    request.getRequestDispatcher("/profile").forward(request, response);
+                    break;
+            }
+        }
+
     }
 
     @Override
@@ -49,6 +69,7 @@ public class HomeController extends HttpServlet {
             switch (subrouter) {
                 case "article":
                     request.getRequestDispatcher("/article").forward(request, response);
+                    break;
             }
         }
     }

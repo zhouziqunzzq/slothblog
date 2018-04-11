@@ -107,7 +107,4 @@ $(document).ready(function () {
     $("#register-repassword").bind('input propertychange', function () {
         checkPassword();
     });
-
-    initHeader();
-    initNewArticlePopper();
 });

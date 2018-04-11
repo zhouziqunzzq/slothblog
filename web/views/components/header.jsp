@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="util.AvatarHelper" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="flex-container-row header-container blur">
     <%--Nav section--%>
@@ -35,13 +36,15 @@
             <h4 class="header-logo">未登录</h4>
         </c:if>
         <c:if test="${ sessionScope.uid != null }">
+            <% String avatarPath = new AvatarHelper().
+                    getAvatarByUserId(Integer.parseInt(session.getAttribute("uid").toString())); %>
             <div class="flex-container-row user-tooltip-container">
                 <a class="flex-container-row new-article-tooltip" href="#" id="new-article-tooltip">
                     <i class="fa fa-plus flex-container-row new-article-tooltip"
                        title="发布博文"></i>
                 </a>
                 <a id="user-dropdown-trigger" href="#" data-jq-dropdown="#user-dropdown">
-                    <img class="avatar-sm avatar-header" src="/static/img/default.png"/>
+                    <img class="avatar-sm avatar-header" src="<%=avatarPath%>"/>
                 </a>
             </div>
         </c:if>
@@ -58,6 +61,11 @@
         <a href="#" class="flex-container-row dropdown-item">
             <div>
                 <i class="fa fa-list fa-fw"></i>我的关注
+            </div>
+        </a>
+        <a href="/user/${ sessionScope.uid }/profile" class="flex-container-row dropdown-item">
+            <div>
+                <i class="fa fa-user-circle-o fa-fw"></i>个人中心
             </div>
         </a>
         <a href="/auth/logout" class="flex-container-row dropdown-item">

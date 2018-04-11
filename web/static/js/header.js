@@ -6,3 +6,8 @@ var initHeader = function () {
         hideNewArticlePopper();
     });
 };
+
+$(document).ready(function () {
+    initHeader();
+    initNewArticlePopper();
+});

@@ -6,6 +6,14 @@
     border-radius: 50%;
 }
 
+.avatar-auto {
+    width: 100%;
+    height: auto;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
 .avatar-header {
     padding: 0 1em;
     -webkit-transition: all 0.4s;
