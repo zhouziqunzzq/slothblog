@@ -19,6 +19,8 @@
           rel="stylesheet" type="text/css"/>
     <link href="${pageContext.request.contextPath}/static/css/index.css"
           rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/static/css/article.css"
+          rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <%--Header--%>
@@ -27,22 +29,10 @@
 </jsp:include>
 <%--Content--%>
 <div class="flex-container-row content-container">
-    <%--TODO--%>
-    <form method="post" action="/user/${ sessionScope.uid }/article">
-        <input type="text" name="title"/>
-        <textarea name="content"></textarea>
-        <button type="submit">发送</button>
-    </form>
     <div class="flex-container-column left-container
         ${ sessionScope.uid != null ? "expanded left-container-no-shadow" : "" }">
         <c:set var="articles" value="${ articles }" scope="request"/>
-        <c:forEach items="${ requestScope.articles }" var="article">
-            <div>
-                <h3>${ article.title }</h3>
-                <i>${ article.created_at }</i>
-                <p>${ article.content }</p>
-            </div>
-        </c:forEach>
+        <jsp:include page="../components/articles.jsp"/>
     </div>
 </div>
 <%@include file="../include/basic-css.jsp" %>

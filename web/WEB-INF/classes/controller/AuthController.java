@@ -5,7 +5,6 @@ import util.GlobalConfigHelper;
 import util.BCrypt;
 import com.google.gson.Gson;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +67,9 @@ public class AuthController extends HttpServlet {
         request.getSession().removeAttribute("flash_login_password");
         request.getSession().removeAttribute("flash_reg_username");
         request.getSession().removeAttribute("flash_reg_password");
+        request.getSession().removeAttribute("error");
+        request.getSession().removeAttribute("error_type");
+        request.getSession().removeAttribute("msg");
     }
 
     private void login(
@@ -79,25 +81,22 @@ public class AuthController extends HttpServlet {
         String passwd = request.getParameter("password");
         User u = new User(properties);
         User user = u.getUserByUsername(username);
+        // Get latest articles
         if (user == null) {
-            request.setAttribute("error", "用户名不存在！");
-            request.setAttribute("error_type", "INVALID_USERNAME");
+            request.getSession().setAttribute("error", "用户名不存在！");
+            request.getSession().setAttribute("error_type", "INVALID_USERNAME");
             loginFlash(request, username, passwd);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
-                    properties.getProperty("TemplatePathRoot") + "index.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect("/");
         } else {
             if (BCrypt.checkpw(passwd, user.getPassword())) {
                 // Login ok
                 request.getSession(true).setAttribute("uid", user.getId());
                 response.sendRedirect("/user/" + user.getId());
             } else {
-                request.setAttribute("error", "密码错误！");
-                request.setAttribute("error_type", "INVALID_PASSWORD");
+                request.getSession().setAttribute("error", "密码错误！");
+                request.getSession().setAttribute("error_type", "INVALID_PASSWORD");
                 loginFlash(request, username, passwd);
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
-                        properties.getProperty("TemplatePathRoot") + "index.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("/");
             }
         }
     }
@@ -112,25 +111,19 @@ public class AuthController extends HttpServlet {
         String repasswd = request.getParameter("repassword");
         if (username.isEmpty() || passwd.isEmpty() ||
                 repasswd.isEmpty() || !passwd.equals(repasswd)) {
-            request.setAttribute("error", "注册信息有误，请检查！");
+            request.getSession().setAttribute("error", "注册信息有误，请检查！");
             regFlash(request, username, passwd);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
-                    properties.getProperty("TemplatePathRoot") + "index.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect("/");
             return;
         }
         User u = new User(properties, -1, username, BCrypt.hashpw(passwd, BCrypt.gensalt()));
         if (u.insert() < 0) {
-            request.setAttribute("error", "注册失败！");
+            request.getSession().setAttribute("error", "注册失败！");
             regFlash(request, username, passwd);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
-                    properties.getProperty("TemplatePathRoot") + "index.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect("/");
         } else {
-            request.setAttribute("msg", "注册成功！请登录");
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
-                    properties.getProperty("TemplatePathRoot") + "index.jsp");
-            dispatcher.forward(request, response);
+            request.getSession().setAttribute("msg", "注册成功！请登录");
+            response.sendRedirect("/");
         }
     }
 

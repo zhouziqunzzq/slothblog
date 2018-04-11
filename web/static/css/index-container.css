@@ -20,6 +20,10 @@ body {
 .left-container {
     flex-grow: 1;
     width: 60%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;

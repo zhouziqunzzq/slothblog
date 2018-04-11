@@ -6,3 +6,7 @@ var initNewArticlePopper = function() {
 var showNewArticlePopper = function() {
     $('#new-article-popper').fadeIn();
 };
+
+var hideNewArticlePopper = function() {
+    $('#new-article-popper').fadeOut();
+};

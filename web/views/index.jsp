@@ -37,16 +37,16 @@
     <div class="${ sessionScope.uid != null ? "hidden" : "flex-container-column right-container blur" }">
         <%--Inline Login Component--%>
         <jsp:include page="components/inline-login.jsp" flush="true">
-            <jsp:param name="error_type" value="${ error_type }"/>
+            <jsp:param name="error_type" value="${ sessionScope.error_type }"/>
         </jsp:include>
         <div class="flex-container-row message-container">
             <p id="error-msg" class="error-msg" style="display: none;"></p>
             <p id="msg" class="msg" style="display: none;"></p>
-            <c:if test="${error != null}">
-                <p class="error-msg"><c:out value="${error}"/></p>
+            <c:if test="${sessionScope.error != null}">
+                <p class="error-msg"><c:out value="${sessionScope.error}"/></p>
             </c:if>
-            <c:if test="${msg != null}">
-                <p class="msg"><c:out value="${msg}"/></p>
+            <c:if test="${sessionScope.msg != null}">
+                <p class="msg"><c:out value="${sessionScope.msg}"/></p>
             </c:if>
         </div>
         <div class="flex-container-column register-container">
