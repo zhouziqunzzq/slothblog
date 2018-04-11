@@ -40,7 +40,7 @@ public class ArticleController extends HttpServlet {
                 response.sendRedirect(request.getHeader("referer"));
             } else {
                 response.sendRedirect(String.format("/user/%d/article/%d",
-                        request.getSession().getAttribute("uid"), newId));
+                        (int)request.getSession().getAttribute("uid"), newId));
             }
         }
     }
