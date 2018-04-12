@@ -3,6 +3,7 @@ package model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class UserInfo extends BasicModel {
@@ -54,6 +55,30 @@ public class UserInfo extends BasicModel {
             System.out.println(String.format("Failed to get user_info (user_id = %d)", uid));
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public int insert() {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "INSERT INTO `user_info` ( `user_id`, `email`, `gender`, `nickname`, `intro`) " +
+                            "VALUES ( ?, ?, ?, ?, ? )", Statement.RETURN_GENERATED_KEYS);
+            sql.setInt(1, this.user_id);
+            sql.setString(2, this.email);
+            sql.setInt(3, this.gender.ordinal());
+            sql.setString(4, this.nickname);
+            sql.setString(5, this.intro);
+
+            if(sql.executeUpdate() > 0)
+                return this.id;
+            else {
+                System.out.println(String.format("Failed to insert user_info (user_id = %d)", this.user_id));
+                return -1;
+            }
+        } catch (SQLException e) {
+            System.out.println(String.format("Failed to insert user_info (user_id = %d)", this.user_id));
+            e.printStackTrace();
+            return -1;
         }
     }
 
