@@ -32,8 +32,28 @@
     <div class="flex-container-row profile-container">
         <div class="flex-container-row profile-card blur">
             <c:choose>
-                <c:when test="${ userInfo == null }">
+                <c:when test="${ userInfo == null && sessionScope.uid != sessionScope.targetUid }">
                     <p>Invalid user ID!</p>
+                </c:when>
+                <c:when test="${ userInfo == null && sessionScope.uid == sessionScope.targetUid }">
+                    <form method="post" action="/user/${ sessionScope.uid }/profile">
+                        <label for="nickname">昵称</label>
+                        <input class="text-input" type="text" name="nickname" id="nickname"/>
+
+                        <label>性别</label>
+                        <input type="radio" name="gender" id="genderM" value="0"/>
+                        <label for="genderM">男</label>
+                        <input type="radio" name="gender" id="genderF" value="1"/>
+                        <label for="genderF">女</label>
+
+                        <br/><label for="email">email</label>
+                        <input class="text-input" type="text" name="nickname" id="email"/>
+
+                        <label for="intro">个人简介</label>
+                        <textarea class="text-input" name="intro" id="intro"></textarea>
+
+                        <button class="basic-button" type="submit">保存</button>
+                    </form>
                 </c:when>
                 <c:otherwise>
                     <div class="profile-avatar-container">
