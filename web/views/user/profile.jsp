@@ -36,23 +36,26 @@
                     <p>Invalid user ID!</p>
                 </c:when>
                 <c:when test="${ userInfo == null && sessionScope.uid == sessionScope.targetUid }">
-                    <form method="post" action="/user/${ sessionScope.uid }/profile">
-                        <label for="nickname">昵称</label>
-                        <input class="text-input" type="text" name="nickname" id="nickname"/>
+                    <form class="flex-container-row" method="post"
+                          action="/user/${ sessionScope.uid }/profile" id="profile-form">
+                        <div class="flex-container-column">
+                            <label for="nickname">昵称</label>
+                            <input class="text-input" type="text" name="nickname" id="nickname"/>
 
-                        <label>性别</label>
-                        <input type="radio" name="gender" id="genderM" value="0"/>
-                        <label for="genderM">男</label>
-                        <input type="radio" name="gender" id="genderF" value="1"/>
-                        <label for="genderF">女</label>
+                            <label>性别</label>
+                            <input type="radio" name="gender" id="genderM" value="0"/>
+                            <label for="genderM">男</label>
+                            <input type="radio" name="gender" id="genderF" value="1"/>
+                            <label for="genderF">女</label>
 
-                        <br/><label for="email">email</label>
-                        <input class="text-input" type="text" name="nickname" id="email"/>
+                            <br/><label for="email">email</label>
+                            <input class="text-input" type="text" name="nickname" id="email"/>
 
-                        <label for="intro">个人简介</label>
-                        <textarea class="text-input" name="intro" id="intro"></textarea>
+                            <label for="intro">个人简介</label>
+                            <textarea class="text-input" name="intro" id="intro"></textarea>
 
-                        <button class="basic-button" type="submit">保存</button>
+                            <button class="basic-button" type="submit">保存</button>
+                        </div>
                     </form>
                 </c:when>
                 <c:otherwise>

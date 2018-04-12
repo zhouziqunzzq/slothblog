@@ -13,6 +13,13 @@
             <a href="/user/${ article.user_id }/article/${ article.id }" class="article-wrapper">
                 <h2 class="article-title">${ article.title }</h2>
             </a>
+            <c:if test="${ article.tags != null }">
+                <div class="article-tags-container">
+                    <c:forEach items="${ article.tags }" var="tag">
+                        <span>${ tag.name }</span>
+                    </c:forEach>
+                </div>
+            </c:if>
             <p class="article-content">${ article.content }</p>
             <i class="article-time">${ article.created_at }</i>
         </div>

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: harry
-  Date: 18-4-6
-  Time: 下午6:25
+  Date: 18-4-12
+  Time: 下午9:33
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
@@ -11,7 +11,7 @@
 <html>
 <head>
     <jsp:include page="../include/title.jsp" flush="true">
-        <jsp:param name="title" value="用户中心"/>
+        <jsp:param name="title" value="${ article.title }"/>
     </jsp:include>
     <link href="${pageContext.request.contextPath}/static/css/index-container.css"
           rel="stylesheet" type="text/css"/>
@@ -25,15 +25,25 @@
 <body>
 <%--Header--%>
 <jsp:include page="../components/header.jsp" flush="true">
-    <jsp:param name="selected" value="userhome"/>
+    <jsp:param name="selected" value="single-article"/>
 </jsp:include>
 <%--Content--%>
 <div class="flex-container-row content-container">
-    <div class="flex-container-column left-container
-        ${ sessionScope.uid != null ? "expanded left-container-no-shadow" : "" }">
-        <c:set var="articles" value="${ articles }" scope="request"/>
-        <jsp:include page="../components/articles.jsp"/>
-    </div>
+    <c:if test="${ article == null }">
+        <p>该文章不存在</p>
+    </c:if>
+    <c:if test="${ article != null }">
+        <div class="flex-container-column article-item blur">
+            <c:if test="${ article.tags != null }">
+                <c:forEach items="${ article.tags }" var="tag">
+                    <span>${ tag.name }</span>
+                </c:forEach>
+            </c:if>
+            <h2 class="article-title">${ article.title }</h2>
+            <p class="article-content">${ article.content }</p>
+            <i class="">${ article.created_at }</i>
+        </div>
+    </c:if>
 </div>
 <%@include file="../include/basic-css.jsp" %>
 <%@include file="../include/basic-js.jsp" %>
