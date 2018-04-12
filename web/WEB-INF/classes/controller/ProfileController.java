@@ -1,7 +1,7 @@
 package controller;
 
-import util.GlobalConfigHelper;
 import model.UserInfo;
+import util.GlobalConfigHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,5 +36,31 @@ public class ProfileController extends HttpServlet {
         request.getRequestDispatcher(
                 properties.getProperty("TemplatePathRoot") + "/user/profile.jsp")
                 .forward(request, response);
+    }
+
+
+    @Override
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        int userId = (int) request.getSession().getAttribute("uid");
+        String email = request.getParameter("email");
+        UserInfo.Gender gender = UserInfo.Gender.values()[Integer.parseInt(request.getParameter("gender"))];
+        String nickname = request.getParameter("nickname");
+        String intro = request.getParameter("intro");
+
+        UserInfo userinfo = new UserInfo(properties);
+        userinfo.setUser_id(userId);
+        userinfo.setEmail(email);
+        userinfo.setGender(gender);
+        userinfo.setNickname(nickname);
+        userinfo.setIntro(intro);
+
+        int userInfoId = userinfo.insert();
+        if (userInfoId == -1)
+            request.getSession().setAttribute("error", "设置失败！");
+        response.sendRedirect("/user/" + userId + "/profile");
     }
 }

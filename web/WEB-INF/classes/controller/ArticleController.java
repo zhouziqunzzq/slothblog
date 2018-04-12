@@ -3,7 +3,9 @@ package controller;
 import model.Article;
 import model.Tag;
 import util.GlobalConfigHelper;
+import util.URLHelper;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,20 @@ public class ArticleController extends HttpServlet {
     }
 
     @Override
+    protected void doGet(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws ServletException, IOException {
+        String articleId = URLHelper.getRouterParam(request.getSession().getAttribute("lastURI").toString(), 4);
+        System.out.println(request.getSession().getAttribute("lastURI"));
+        Article article = new Article(properties).getArticleById(Integer.parseInt(articleId));
+        request.setAttribute("article", article);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
+                properties.getProperty("TemplatePathRoot") + "user/article.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    @Override
     protected void doPost(
             HttpServletRequest request,
             HttpServletResponse response
@@ -38,7 +54,6 @@ public class ArticleController extends HttpServlet {
         for(int i = 0; i < tagList.size(); i++) {
             tag.setName(tagList.get(i));
             int tagId = tag.insert();
-            System.out.println(tagId);
             tagIdList.add(tagId);
         }
 

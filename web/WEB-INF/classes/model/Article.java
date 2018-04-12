@@ -56,8 +56,11 @@ public class Article extends BasicModel {
             sql.setInt(2, perPage);
             ResultSet resultSet = sql.executeQuery();
             List<Article> articles = new ArrayList<>();
+            Article article;
             while (resultSet.next()) {
-                articles.add(new Article(resultSet));
+                article = new Article(resultSet);
+                article.setTags(getTagsByArticleId(resultSet.getInt("id")));
+                articles.add(article);
             }
             return articles;
         } catch (SQLException e) {
@@ -91,6 +94,25 @@ public class Article extends BasicModel {
             System.out.println(String.format("Failed to post article (uid = %s, title = %s)", this.user_id, this.title));
             e.printStackTrace();
             return -1;
+        }
+    }
+
+    public Article getArticleById(int id) {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "SELECT * FROM `articles` WHERE `id`=?");
+            sql.setInt(1, id);
+            ResultSet rs = sql.executeQuery();
+            if(rs.next()) {
+                Article article = new Article(rs);
+                article.setTags(getTagsByArticleId(id));
+                return article;
+            } else
+                return null;
+        } catch (SQLException e) {
+            System.out.println("Failed to get article");
+            e.printStackTrace();
+            return null;
         }
     }
 
