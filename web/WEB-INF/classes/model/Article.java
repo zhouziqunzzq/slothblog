@@ -166,7 +166,7 @@ public class Article extends BasicModel {
         try {
             PreparedStatement sql = getConn().prepareStatement(
                     "SELECT comments.* FROM `comments`" +
-                            "WHERE `article_id`=?" + "ORDER BY `created_at` DESC LIMIT ?,?");
+                            "WHERE `article_id`=?" + " ORDER BY `created_at` DESC LIMIT ?,?");
             sql.setInt(1, articleId);
             sql.setInt(2, (curpage - 1) * perpage);
             sql.setInt(3, perpage);

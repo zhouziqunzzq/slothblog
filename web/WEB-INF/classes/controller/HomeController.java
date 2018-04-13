@@ -70,6 +70,7 @@ public class HomeController extends HttpServlet {
         else {
             switch (subrouter) {
                 case "article":
+                    request.getSession().setAttribute("lastURI", request.getRequestURI());
                     request.getRequestDispatcher("/article").forward(request, response);
                     break;
                 case "profile":

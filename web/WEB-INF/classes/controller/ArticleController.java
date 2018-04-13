@@ -43,16 +43,39 @@ public class ArticleController extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
+        String lastURI = request.getSession().getAttribute("lastURI").toString();
+        String subrouter = URLHelper.getRouterParam(lastURI, 5);
+        switch (subrouter) {
+            case "":
+                doArticlePost(request, response);
+                break;
+            case "comment":
+                int targetArticleId = Integer.parseInt(
+                        URLHelper.getRouterParam(lastURI, 4));
+                int articleUserId = Integer.parseInt(
+                        URLHelper.getRouterParam(lastURI, 2));
+                request.getSession().setAttribute("targetArticleId", targetArticleId);
+                request.getSession().setAttribute("articleUserId", articleUserId);
+                request.getRequestDispatcher("/comment").forward(request, response);
+                break;
+        }
+
+    }
+
+    private void doArticlePost(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String tags = request.getParameter("tags");
 
         List<String> tagList = new ArrayList<String>(Arrays.asList(tags.split(" ")));
-        List<Integer> tagIdList = new ArrayList<Integer>();
+        List<Integer> tagIdList = new ArrayList<>();
         Tag tag = new Tag(properties);
-        for(int i = 0; i < tagList.size(); i++) {
-            tag.setName(tagList.get(i));
+        for (String aTagList : tagList) {
+            tag.setName(aTagList);
             int tagId = tag.insert();
             tagIdList.add(tagId);
         }
@@ -71,12 +94,12 @@ public class ArticleController extends HttpServlet {
                 response.sendRedirect(request.getHeader("referer"));
             } else {
                 boolean flag = article.link(tagIdList);
-                if(!flag) {
+                if (!flag) {
                     request.setAttribute("error", "Link失败！");
                     response.sendRedirect(request.getHeader("referer"));
                 }
                 response.sendRedirect(String.format("/user/%d/article/%d",
-                        (int)request.getSession().getAttribute("uid"), newId));
+                        (int) request.getSession().getAttribute("uid"), newId));
             }
         }
     }

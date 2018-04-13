@@ -28,24 +28,45 @@
     <jsp:param name="selected" value="single-article"/>
 </jsp:include>
 <%--Content--%>
-<div class="flex-container-row content-container">
+<div class="flex-container-column content-container single-article-container">
     <c:if test="${ article == null }">
         <p>该文章不存在</p>
     </c:if>
     <c:if test="${ article != null }">
-        <div class="flex-container-column article-item blur">
+        <%--Single article content--%>
+        <div class="flex-container-column single-article-item blur">
+            <h2 class="single-article-title">${ article.title }</h2>
+            <p class="single-article-content">${ article.content }</p>
             <c:if test="${ article.tags != null }">
-                <c:forEach items="${ article.tags }" var="tag">
-                    <span>${ tag.name }</span>
-                </c:forEach>
+                <div class="flex-container-row article-tags-container">
+                    <c:forEach items="${ article.tags }" var="tag">
+                        <span class="article-tag blur">${ tag.name }</span>
+                    </c:forEach>
+                </div>
             </c:if>
-            <h2 class="article-title">${ article.title }</h2>
-            <p class="article-content">${ article.content }</p>
             <i class="">${ article.created_at }</i>
         </div>
+        <%--New comment area--%>
+        <c:if test="${ sessionScope.uid != null }">
+            <form method="post" class="flex-container-column new-comment-container"
+                  action="" id="new-comment-form">
+                <textarea name="content" placeholder="发表评论..."></textarea>
+                <button type="submit" class="basic-button">发表</button>
+            </form>
+        </c:if>
+        <%--Comments if exist--%>
+        <c:if test="${ article.comments != null }">
+            <c:forEach items="${ article.comments }" var="comment">
+                <div class="flex-container-column comment-container blur">
+                    <p>${ comment.content }</p>
+                    <p>${ comment.created_at }</p>
+                </div>
+            </c:forEach>
+        </c:if>
     </c:if>
 </div>
 <%@include file="../include/basic-css.jsp" %>
 <%@include file="../include/basic-js.jsp" %>
+<script src="${pageContext.request.contextPath}/static/js/new-article.js"></script>
 </body>
 </html>
