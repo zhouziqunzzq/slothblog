@@ -12,6 +12,7 @@ public class Article extends BasicModel {
     private String content;
     private java.sql.Timestamp created_at;
     private List<Tag> tags;
+    private List<Comment> comments;
 
     public Article() {
         super();
@@ -106,6 +107,7 @@ public class Article extends BasicModel {
             if(rs.next()) {
                 Article article = new Article(rs);
                 article.setTags(getTagsByArticleId(id));
+                article.setComments(getCommentsByArticleId(rs.getInt("id"), 1, 10));
                 return article;
             } else
                 return null;
@@ -160,6 +162,27 @@ public class Article extends BasicModel {
         }
     }
 
+    public List<Comment> getCommentsByArticleId(int articleId, int curpage, int perpage) {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "SELECT comments.* FROM `comments`" +
+                            "WHERE `article_id`=?" + "ORDER BY `created_at` DESC LIMIT ?,?");
+            sql.setInt(1, articleId);
+            sql.setInt(2, (curpage - 1) * perpage);
+            sql.setInt(3, perpage);
+            ResultSet rs = sql.executeQuery();
+            List<Comment> comments = new ArrayList<>();
+            while (rs.next()) {
+                comments.add(new Comment(rs));
+            }
+            return comments;
+        } catch (SQLException e) {
+            System.out.println("Failed to get comments");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean link (List<Integer> tagIdList) {
         try {
             boolean flag = true;
@@ -180,47 +203,31 @@ public class Article extends BasicModel {
         }
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public int getUser_id() {
-        return user_id;
-    }
+    public int getUser_id() { return user_id; }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
+    public void setUser_id(int user_id) { this.user_id = user_id; }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() { return title; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) { this.title = title; }
 
-    public String getContent() {
-        return content;
-    }
+    public String getContent() { return content; }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+    public void setContent(String content) { this.content = content; }
 
-    public Timestamp getCreated_at() {
-        return created_at;
-    }
+    public Timestamp getCreated_at() { return created_at; }
 
-    public void setCreated_at(Timestamp timestamp) {
-        this.created_at = timestamp;
-    }
+    public void setCreated_at(Timestamp timestamp) { this.created_at = timestamp; }
 
     public List<Tag> getTags() { return tags; }
 
     public void setTags(List<Tag> tags) { this.tags = tags; }
+
+    public List<Comment> getComments() { return comments; }
+
+    public void setComments(List<Comment> comments) { this.comments = comments; }
 }
