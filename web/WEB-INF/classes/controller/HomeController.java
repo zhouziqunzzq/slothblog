@@ -18,9 +18,7 @@ public class HomeController extends HttpServlet {
     public static int perPageArticles = 10;
 
     @Override
-    public void init() {
-        properties = GlobalConfigHelper.getConfigFromContext(this.getServletContext());
-    }
+    public void init() { properties = GlobalConfigHelper.getConfigFromContext(this.getServletContext()); }
 
     @Override
     protected void doGet(
