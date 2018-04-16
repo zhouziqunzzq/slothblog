@@ -46,10 +46,12 @@
                 </div>
             </c:if>
             <i class="">${ article.created_at }</i>
-            <form method="post" id="delete-article-form" class="delete-article-form" action="">
-                <input type="hidden" name="action" value="delete"/>
-                <button type="submit" class="basic-button delete-article-button">删除</button>
-            </form>
+            <c:if test="${ sessionScope.uid != null && sessionScope.uid == sessionScope.targetUid }">
+                <form method="post" id="delete-article-form" class="delete-article-form" action="">
+                    <input type="hidden" name="action" value="delete"/>
+                    <button type="submit" class="basic-button delete-article-button">删除</button>
+                </form>
+            </c:if>
         </div>
         <%--New comment area--%>
         <c:if test="${ sessionScope.uid != null }">
@@ -75,10 +77,10 @@
                         <img class="comment-avatar-auto" src="${ comment.avatar_path }"/>
                     </div>
                     <div class="flex-container-column comment-right-container">
-                    <div class="comment-bubble">
-                        <p>${ comment.content }</p>
-                        <p>${ comment.created_at }</p>
-                    </div>
+                        <div class="comment-bubble">
+                            <p>${ comment.content }</p>
+                            <p>${ comment.created_at }</p>
+                        </div>
                     </div>
                 </div>
             </c:forEach>

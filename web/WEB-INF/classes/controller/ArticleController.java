@@ -30,9 +30,11 @@ public class ArticleController extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         String articleId = URLHelper.getRouterParam(request.getSession().getAttribute("lastURI").toString(), 4);
-        System.out.println(request.getSession().getAttribute("lastURI"));
+        int targetUid = Integer.parseInt(URLHelper.getRouterParam(
+                request.getSession().getAttribute("lastURI").toString(), 2));
         Article article = new Article(properties).getArticleById(Integer.parseInt(articleId));
         request.setAttribute("article", article);
+        request.getSession().setAttribute("targetUid", targetUid);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(
                 properties.getProperty("TemplatePathRoot") + "user/article.jsp");
         dispatcher.forward(request, response);
@@ -43,11 +45,16 @@ public class ArticleController extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String lastURI = request.getSession().getAttribute("lastURI").toString();
         String subrouter = URLHelper.getRouterParam(lastURI, 5);
+        String action = request.getParameter("action");
         switch (subrouter) {
             case "":
-                doArticlePost(request, response);
+                if(action.equals("new"))
+                    doArticlePost(request, response);
+                else if(action.equals("delete"))
+                    doArticleDelete(request, response);
                 break;
             case "comment":
                 int targetArticleId = Integer.parseInt(
@@ -60,6 +67,26 @@ public class ArticleController extends HttpServlet {
                 break;
         }
 
+    }
+
+    private void doArticleDelete(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws ServletException, IOException {
+        String lastURI = request.getSession().getAttribute("lastURI").toString();
+        int article_id = Integer.parseInt(URLHelper.getRouterParam(lastURI, 4));
+        Article article = new Article(properties);
+        boolean flag = article.delete(article_id);
+
+        if(flag == false) {
+            request.setAttribute("error", "文章删除失败！");
+            response.sendRedirect(String.format("/user/%d/article/%d",
+                    (int) request.getSession().getAttribute("uid"), article_id));
+        } else {
+            request.setAttribute("msg", "文章删除成功！");
+            response.sendRedirect(String.format("/user/%d",
+                    (int) request.getSession().getAttribute("uid")));
+        }
     }
 
     private void doArticlePost(

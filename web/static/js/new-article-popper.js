@@ -4,7 +4,7 @@ var initNewArticlePopper = function () {
     var popper = $('#new-article-popper');
     popper.appendTo('body');
     // Disable submit on Enter pressed
-    $("#new-article-popper>form").on("keypress", function (e) {
+    $("#new-article-popper>form").on("keypress", ":input:not(textarea)", function (e) {
         if (e.keyCode === 13) {
             e.preventDefault();
         }
