@@ -1,4 +1,4 @@
-<%--
+<%@ page import="util.AvatarHelper" %><%--
   Created by IntelliJ IDEA.
   User: harry
   Date: 18-4-12
@@ -40,7 +40,7 @@
             <c:if test="${ article.tags != null }">
                 <div class="flex-container-row article-tags-container">
                     <c:forEach items="${ article.tags }" var="tag">
-                        <span class="article-tag blur">${ tag.name }</span>
+                        <span class="article-tag">${ tag.name }</span>
                     </c:forEach>
                 </div>
             </c:if>
@@ -48,18 +48,33 @@
         </div>
         <%--New comment area--%>
         <c:if test="${ sessionScope.uid != null }">
-            <form method="post" class="flex-container-column new-comment-container"
-                  action="" id="new-comment-form">
-                <textarea name="content" placeholder="发表评论..."></textarea>
-                <button type="submit" class="basic-button">发表</button>
-            </form>
+            <div class="flex-container-row new-comment-wrapper blur">
+                <% String avatarPath = new AvatarHelper().
+                        getAvatarByUserId(Integer.parseInt(session.getAttribute("uid").toString())); %>
+                <div class="new-comment-avatar-wrapper">
+                    <img class="new-comment-avatar-auto" src="<%=avatarPath%>"/>
+                </div>
+                <form method="post" class="flex-container-column new-comment-form"
+                      action="" id="new-comment-form">
+                    <textarea name="content" class="new-comment-content" placeholder="发表评论..."></textarea>
+                    <button type="submit" class="basic-button new-comment-button">发表</button>
+                </form>
+            </div>
         </c:if>
         <%--Comments if exist--%>
         <c:if test="${ article.comments != null }">
             <c:forEach items="${ article.comments }" var="comment">
-                <div class="flex-container-column comment-container blur">
-                    <p>${ comment.content }</p>
-                    <p>${ comment.created_at }</p>
+                <c:set var="commentUid" value="${ comment.user_id }"/>
+                <div class="flex-container-row comment-container">
+                    <div class="comment-avatar-wrapper">
+                        <img class="comment-avatar-auto" src="${ comment.avatar_path }"/>
+                    </div>
+                    <div class="flex-container-column comment-right-container">
+                    <div class="comment-bubble">
+                        <p>${ comment.content }</p>
+                        <p>${ comment.created_at }</p>
+                    </div>
+                    </div>
                 </div>
             </c:forEach>
         </c:if>

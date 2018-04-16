@@ -27,3 +27,21 @@
     width: 45px;
     height: 45px;
 }
+
+.avatar-comment {
+    padding: 0.5em;
+}
+
+.new-comment-avatar-auto {
+    height: 100%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.comment-avatar-auto {
+    height: 15%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}

@@ -1,5 +1,7 @@
 package model;
 
+import util.AvatarHelper;
+
 import java.sql.*;
 import java.util.Properties;
 
@@ -9,6 +11,7 @@ public class Comment extends BasicModel {
     private java.sql.Timestamp created_at;
     private int article_id;
     private int user_id;
+    private String avatar_path;
 
     public Comment() {
         super();
@@ -22,6 +25,7 @@ public class Comment extends BasicModel {
         this.setCreated_at(resultSet.getTimestamp("created_at"));
         this.setArticle_id(resultSet.getInt("Article_id"));
         this.setUser_id(resultSet.getInt("user_id"));
+        this.setAvatar_path(new AvatarHelper().getAvatarByUserId(this.getUser_id()));
     }
 
     public Comment(Properties properties) {
@@ -60,23 +64,51 @@ public class Comment extends BasicModel {
         }
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getContent() { return content; }
+    public String getContent() {
+        return content;
+    }
 
-    public void setContent(String content) { this.content = content; }
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-    public Timestamp getCreated_at() { return created_at; }
+    public Timestamp getCreated_at() {
+        return created_at;
+    }
 
-    public void setCreated_at(Timestamp created_at) { this.created_at = created_at; }
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
+    }
 
-    public int getArticle_id() { return article_id; }
+    public int getArticle_id() {
+        return article_id;
+    }
 
-    public void setArticle_id(int article_id) { this.article_id = article_id; }
+    public void setArticle_id(int article_id) {
+        this.article_id = article_id;
+    }
 
-    public int getUser_id() { return user_id; }
+    public int getUser_id() {
+        return user_id;
+    }
 
-    public void setUser_id(int user_id) { this.user_id = user_id; }
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getAvatar_path() {
+        return avatar_path;
+    }
+
+    public void setAvatar_path(String avatar_path) {
+        this.avatar_path = avatar_path;
+    }
 }

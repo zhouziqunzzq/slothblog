@@ -17,7 +17,7 @@
             <c:if test="${ article.tags != null }">
                 <div class="flex-container-row article-tags-container">
                     <c:forEach items="${ article.tags }" var="tag">
-                        <span class="article-tag blur">${ tag.name }</span>
+                        <span class="article-tag">${ tag.name }</span>
                     </c:forEach>
                 </div>
             </c:if>

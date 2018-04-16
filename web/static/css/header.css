@@ -57,19 +57,19 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    -webkit-transition: background-color 0.4s;
-    -moz-transition: background-color 0.4s;
-    -ms-transition: background-color 0.4s;
-    -o-transition: background-color 0.4s;
-    transition: background-color 0.4s;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
 }
 
 .nav-item-selected {
-    background: rgba(83, 164, 238, 0.48) !important;
+    border-top: #1da1f2 solid;
 }
 
 .nav-item:hover {
-    background: rgba(83, 164, 238, 0.48) !important;
+    font-size: 18px !important;
 }
 
 .header-logo {

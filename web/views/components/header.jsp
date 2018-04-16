@@ -76,7 +76,4 @@
     </div>
 </div>
 <%--New article popup--%>
-<%--Header--%>
-<jsp:include page="new_article.jsp" flush="true">
-    <jsp:param name="selected" value="index"/>
-</jsp:include>
+<jsp:include page="new_article.jsp" flush="true"/>
