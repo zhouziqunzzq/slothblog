@@ -203,6 +203,20 @@ public class Article extends BasicModel {
         }
     }
 
+    public boolean delete(int article_id) {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "DELETE FROM `articles` WHERE `id`=?");
+            sql.setInt(1, article_id);
+            if(sql.executeUpdate() > 0) return true;
+            else return false;
+        } catch (SQLException e) {
+            System.out.println(String.format("Failed to delete article (article_id = %d), ", article_id));
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
