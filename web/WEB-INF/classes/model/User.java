@@ -58,11 +58,10 @@ public class User extends BasicModel {
     public boolean update() {
         try {
             PreparedStatement sql = getConn().prepareStatement(
-                    "UPDATE `users` SET `username`=?, `password`=? " +
+                    "UPDATE `users` SET `password`=? " +
                             "WHERE `id`=?");
-            sql.setString(1, this.username);
-            sql.setString(2, this.password);
-            sql.setInt(3, this.id);
+            sql.setString(1, this.password);
+            sql.setInt(2, this.id);
 
             return sql.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -103,6 +102,26 @@ public class User extends BasicModel {
             PreparedStatement sql = getConn().prepareStatement(
                     "SELECT * FROM `users` WHERE `username` = ?");
             sql.setString(1, username);
+            ResultSet rs = sql.executeQuery();
+
+            if (!rs.next()) {
+                return null;
+            } else {
+                return new User(rs);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Failed to get users");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public User getUserByUserId(int user_id) {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "SELECT * FROM `users` WHERE `id` = ?");
+            sql.setInt(1, user_id);
             ResultSet rs = sql.executeQuery();
 
             if (!rs.next()) {
