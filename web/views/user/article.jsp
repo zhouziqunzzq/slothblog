@@ -1,4 +1,4 @@
-<%@ page import="util.AvatarHelper" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: harry
   Date: 18-4-12
@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <% request.setCharacterEncoding("UTF-8"); %>
+<%@ page import="util.AvatarHelper" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -45,6 +46,10 @@
                 </div>
             </c:if>
             <i class="">${ article.created_at }</i>
+            <form method="post" id="delete-article-form" class="delete-article-form" action="">
+                <input type="hidden" name="action" value="delete"/>
+                <button type="submit" class="basic-button delete-article-button">删除</button>
+            </form>
         </div>
         <%--New comment area--%>
         <c:if test="${ sessionScope.uid != null }">

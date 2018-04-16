@@ -172,6 +172,13 @@
     padding: 0.6em;
 }
 
+.delete-article-button {
+    padding: 0.3em;
+    background-color: rgba(255, 26, 8, 0.58);
+    color: white;
+    border: none;
+}
+
 .new-comment-content {
     min-height: 5em;
 }
@@ -199,4 +206,10 @@
     border-bottom-color: currentColor;
     border-radius: 0 0 0 40px;
     color: #c7d9e361;
+}
+
+.delete-article-form {
+    position: absolute;
+    bottom: 0;
+    right: 0.5em;
 }

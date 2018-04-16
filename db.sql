@@ -21,6 +21,8 @@ CREATE TABLE user_info (
   intro    text,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   CHARACTER SET utf8
   COLLATE utf8_general_ci;
@@ -34,6 +36,8 @@ CREATE TABLE articles (
   created_at timestamp    NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   CHARACTER SET utf8
   COLLATE utf8_general_ci;
@@ -58,8 +62,12 @@ CREATE TABLE users_tags (
   user_id int,
   tag_id  int,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES users (id),
+  FOREIGN KEY (user_id) REFERENCES users (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (tag_id) REFERENCES tags (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   CHARACTER SET utf8
   COLLATE utf8_general_ci;
@@ -70,8 +78,12 @@ CREATE TABLE articles_tags (
   article_id int,
   tag_id     int,
   PRIMARY KEY (id),
-  FOREIGN KEY (article_id) REFERENCES articles (id),
+  FOREIGN KEY (article_id) REFERENCES articles (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (tag_id) REFERENCES tags (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   CHARACTER SET utf8
   COLLATE utf8_general_ci;
@@ -84,8 +96,12 @@ CREATE TABLE comments (
   article_id int       NOT NULL,
   user_id    int       NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (article_id) REFERENCES articles (id),
+  FOREIGN KEY (article_id) REFERENCES articles (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 )
   CHARACTER SET utf8
   COLLATE utf8_general_ci;

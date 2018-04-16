@@ -18,6 +18,7 @@
         <input type="text" placeholder="按下Enter添加Tag" class="new-article-input"
                id="new-article-tags-input"/>
         <input type="hidden" name="tags" id="new-article-tags-input-real"/>
+        <input type="hidden" name="action" value="new"/>
         <textarea name="content" placeholder="分享此刻的想法..."
                   class="new-article-input new-article-content"></textarea>
         <button class="basic-button new-article-button" id="new-article-button">发送</button>
