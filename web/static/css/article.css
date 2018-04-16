@@ -59,6 +59,10 @@
     flex-wrap: wrap;
 }
 
+.new-tags-container {
+    align-self: flex-start;
+}
+
 .article-tag {
     display: block;
     background: #bfbfbf44;
@@ -71,6 +75,21 @@
     -webkit-border-radius: 0.2em;
     -moz-border-radius: 0.2em;
     border-radius: 0.2em;
+}
+
+.article-tag-deep {
+    background: rgba(1, 22, 83, 0.77) !important;
+}
+
+.article-tag-deletable {
+    cursor: pointer;
+}
+
+.article-tag-deletable:hover:after {
+    content: '\f00d';
+    font: normal normal normal 14px/1 FontAwesome;
+    color: red;
+    margin: 0 0 0 0.3em;
 }
 
 .single-article-item {

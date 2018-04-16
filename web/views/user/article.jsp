@@ -82,6 +82,6 @@
 </div>
 <%@include file="../include/basic-css.jsp" %>
 <%@include file="../include/basic-js.jsp" %>
-<script src="${pageContext.request.contextPath}/static/js/new-article.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/new-comment.js"></script>
 </body>
 </html>
