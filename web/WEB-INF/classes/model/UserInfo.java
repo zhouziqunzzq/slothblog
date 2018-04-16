@@ -60,25 +60,61 @@ public class UserInfo extends BasicModel {
 
     public int insert() {
         try {
-            PreparedStatement sql = getConn().prepareStatement(
-                    "INSERT INTO `user_info` ( `user_id`, `email`, `gender`, `nickname`, `intro`) " +
-                            "VALUES ( ?, ?, ?, ?, ? )", Statement.RETURN_GENERATED_KEYS);
-            sql.setInt(1, this.user_id);
-            sql.setString(2, this.email);
-            sql.setInt(3, this.gender.ordinal());
-            sql.setString(4, this.nickname);
-            sql.setString(5, this.intro);
+            PreparedStatement sql1 = getConn().prepareStatement(
+                    "SELECT * FROM `user_info` WHERE user_id=?");
+            sql1.setInt(1, this.user_id);
+            ResultSet rs = sql1.executeQuery();
+            if(!rs.next()) {
+                PreparedStatement sql = getConn().prepareStatement(
+                        "INSERT INTO `user_info` ( `user_id`, `email`, `gender`, `nickname`, `intro`) " +
+                                "VALUES ( ?, ?, ?, ?, ? )", Statement.RETURN_GENERATED_KEYS);
+                sql.setInt(1, this.user_id);
+                sql.setString(2, this.email);
+                sql.setInt(3, this.gender.ordinal());
+                sql.setString(4, this.nickname);
+                sql.setString(5, this.intro);
 
-            if(sql.executeUpdate() > 0)
-                return this.id;
-            else {
-                System.out.println(String.format("Failed to insert user_info (user_id = %d)", this.user_id));
-                return -1;
+                if (sql.executeUpdate() > 0)
+                    return this.id;
+                else {
+                    System.out.println(String.format("Failed to insert user_info (user_id = %d)", this.user_id));
+                    return -1;
+                }
+            } else {
+                UserInfo userinfo = new UserInfo(this.getProperties());
+                userinfo.setUser_id(this.user_id);
+                userinfo.setEmail(this.email);
+                userinfo.setGender(this.gender);
+                userinfo.setNickname(this.nickname);
+                userinfo.setIntro(this.intro);
+
+                boolean flag = userinfo.update();
+                if(flag == true) return this.id;
+                else return -1;
             }
         } catch (SQLException e) {
             System.out.println(String.format("Failed to insert user_info (user_id = %d)", this.user_id));
             e.printStackTrace();
             return -1;
+        }
+    }
+
+    public boolean update() {
+        try {
+            PreparedStatement sql = getConn().prepareStatement(
+                    "UPDATE `user_info` SET `email`=?, `gender`=?, `nickname`=?, `intro`=? " +
+                            "WHERE `user_id`=?");
+            sql.setString(1, this.email);
+            sql.setInt(2, this.gender.ordinal());
+            sql.setString(3, this.nickname);
+            sql.setString(4, this.intro);
+            sql.setInt(5, this.user_id);
+
+            return sql.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println(String.format("Failed to update user_info(user_id = %d)", this.id));
+            e.printStackTrace();
+            return false;
         }
     }
 

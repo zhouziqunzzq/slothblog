@@ -49,6 +49,8 @@ public class AuthController extends HttpServlet {
             case "/auth/register/check-username":
                 checkUsername(request, response);
                 break;
+            case "/auth/edit-password":
+                editPassword(request, response);
         }
     }
 
@@ -161,4 +163,37 @@ public class AuthController extends HttpServlet {
         request.getSession(true).removeAttribute("uid");
         response.sendRedirect("/");
     }
-}
+
+    private void editPassword(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws ServletException, IOException {
+        cleanFlash(request);
+        int user_id = (int) request.getSession().getAttribute("uid");
+        User u = new User(properties);
+        u.setId(user_id);
+        User user = u.getUserByUserId(user_id);
+        user.setProperties(properties);
+
+        String oldpasswd = request.getParameter("oldpassword");
+        String passwd = request.getParameter("password");
+        String repasswd = request.getParameter("repassword");
+        if (!BCrypt.checkpw(oldpasswd, user.getPassword()) || passwd.isEmpty() ||
+                repasswd.isEmpty() || !passwd.equals(repasswd)) {
+            request.getSession().setAttribute("error", "修改信息有误，请检查！");
+            regFlash(request, user.getUsername(), passwd);
+            response.sendRedirect(String.format("/user/%d/profile", user_id));
+            return;
+        }
+        user.setPassword(BCrypt.hashpw(passwd, BCrypt.gensalt()));
+        boolean flag = user.update();
+
+        if(!flag) {
+            request.getSession().setAttribute("error", "修改失败！");
+        } else {
+            request.getSession().setAttribute("msg", "修改成功！");
+        }
+        response.sendRedirect(String.format("/user/%d/profile", user_id));
+    }
+
+    }
