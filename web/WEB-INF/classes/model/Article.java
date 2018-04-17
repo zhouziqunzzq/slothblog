@@ -106,11 +106,10 @@ public class Article extends BasicModel {
     public Article getArticleById(int id) {
         try {
             PreparedStatement sql = getConn().prepareStatement(
-                    "SELECT `articles`.*, `users`.`username`, `user_info`.`nickname` " +
-                            "FROM `articles`, `users`, `user_info` " +
+                    "SELECT `articles`.*, `users`.`username` " +
+                            "FROM `articles`, `users` " +
                             "WHERE `articles`.`id`=? " +
-                            "AND `articles`.`user_id` = `users`.`id` " +
-                            "AND `articles`.`user_id` = `user_info`.`user_id`");
+                            "AND `articles`.`user_id` = `users`.`id` ");
             sql.setInt(1, id);
             ResultSet rs = sql.executeQuery();
             if (rs.next()) {
@@ -119,9 +118,19 @@ public class Article extends BasicModel {
                 // Set username for article
                 article.setUser(new User(getProperties()));
                 article.user.setUsername(rs.getString("username"));
+
                 // Set nickname for article
-                article.setUserInfo(new UserInfo(getProperties()));
-                article.userInfo.setNickname(rs.getString("nickname"));
+                PreparedStatement sql2 = getConn().prepareStatement(
+                        "SELECT * FROM `user_info` WHERE `user_id`=?");
+                sql2.setInt(1, rs.getInt("user_id"));
+                ResultSet rs2 = sql2.executeQuery();
+                if(rs2.next()) {
+                    article.setUserInfo(new UserInfo(getProperties()));
+                    article.userInfo.setNickname(rs2.getString("nickname"));
+                } else {
+                    System.out.println("该用户未设置nickname");
+                }
+
                 // Set comments for article
                 article.setComments(getCommentsByArticleId(rs.getInt("id"), 1, 10));
                 return article;
