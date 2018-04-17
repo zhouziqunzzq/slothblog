@@ -25,3 +25,93 @@
     flex-shrink: 1;
     padding: 1em;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 14px;
+    line-height: 2;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    color: #666;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #f00;
+}
+
+.inline-ul {
+    font-size: 0;
+}
+
+.inline-ul ul li {
+    font-size: 12px;
+    letter-spacing: normal;
+    word-spacing: normal;
+    vertical-align: top;
+    display: inline-block;
+}
+
+.widget-title {
+    font-size: 13px;
+    font-weight: normal;
+    padding: 20px 20px 0px;
+}
+
+.widget-tab .widget-title {
+    font-size: 0;
+}
+
+.widget-tab .widget-box {
+    margin: 0 20px 20px;
+}
+
+.widget-tab .widget-title ul li {
+    margin-left: 0;
+    width: 30%;
+    text-align: center;
+    margin-right: 1.3%;
+    padding: 8px 1%;
+}
+
+.widget-tab .widget-title ul li:hover {
+    background: #F7F7F7
+}
+
+.widget-tab .widget-title label {
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+}
+
+.widget-tab .widget-title ul li.active {
+    background: #F7F7F7
+}
+
+.widget-tab input {
+}
+
+.widget-tab .widget-box ul {
+    display: none;
+}
+
+.widget-box ul li a {
+    padding-left: 20px;
+}
+
+#modify-password:checked ~ .widget-title .modify-password, #user-info:checked ~ .widget-title .user-info, #edit-userinfo:checked ~ .widget-title .edit-userinfo {
+    background:#F7F7F7;
+}
+
+#modify-password:checked ~ .widget-box .modify-password-form, #user-info:checked ~ .widget-box .user-info-form, #edit-userinfo:checked ~ .widget-box .edit-userinfo-form {
+    display: block
+}
