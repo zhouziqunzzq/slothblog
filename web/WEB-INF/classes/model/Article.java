@@ -11,8 +11,11 @@ public class Article extends BasicModel {
     private String title;
     private String content;
     private java.sql.Timestamp created_at;
+    private String created_at_precise;
     private List<Tag> tags;
     private List<Comment> comments;
+    private User user;
+    private UserInfo userInfo;
 
     public Article() {
         super();
@@ -40,6 +43,8 @@ public class Article extends BasicModel {
         this.title = title;
         this.content = content;
         this.created_at = timestamp;
+        this.setUser(new User(this.getProperties()).getUserByUserId(this.getUser_id()));
+        this.user.setProperties(this.getProperties());
     }
 
     /**
@@ -101,12 +106,23 @@ public class Article extends BasicModel {
     public Article getArticleById(int id) {
         try {
             PreparedStatement sql = getConn().prepareStatement(
-                    "SELECT * FROM `articles` WHERE `id`=?");
+                    "SELECT `articles`.*, `users`.`username`, `user_info`.`nickname` " +
+                            "FROM `articles`, `users`, `user_info` " +
+                            "WHERE `articles`.`id`=? " +
+                            "AND `articles`.`user_id` = `users`.`id` " +
+                            "AND `articles`.`user_id` = `user_info`.`user_id`");
             sql.setInt(1, id);
             ResultSet rs = sql.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 Article article = new Article(rs);
                 article.setTags(getTagsByArticleId(id));
+                // Set username for article
+                article.setUser(new User(getProperties()));
+                article.user.setUsername(rs.getString("username"));
+                // Set nickname for article
+                article.setUserInfo(new UserInfo(getProperties()));
+                article.userInfo.setNickname(rs.getString("nickname"));
+                // Set comments for article
                 article.setComments(getCommentsByArticleId(rs.getInt("id"), 1, 10));
                 return article;
             } else
@@ -122,7 +138,7 @@ public class Article extends BasicModel {
         try {
             PreparedStatement sql = getConn().prepareStatement(
                     "SELECT * FROM `articles` WHERE `user_id`=?" +
-                    " ORDER BY `created_at` DESC LIMIT ?,?");
+                            " ORDER BY `created_at` DESC LIMIT ?,?");
             sql.setInt(1, uid);
             sql.setInt(2, (curpage - 1) * perpage);
             sql.setInt(3, perpage);
@@ -183,17 +199,17 @@ public class Article extends BasicModel {
         }
     }
 
-    public boolean link (List<Integer> tagIdList) {
+    public boolean link(List<Integer> tagIdList) {
         try {
             boolean flag = true;
-            for(int i = 0; i < tagIdList.size(); i++) {
+            for (int i = 0; i < tagIdList.size(); i++) {
                 int tagId = tagIdList.get(i);
                 PreparedStatement sql = getConn().prepareStatement(
                         "INSERT INTO `articles_tags` ( `article_id`, `tag_id`) " +
                                 "VALUES ( ?, ? )", Statement.RETURN_GENERATED_KEYS);
                 sql.setInt(1, this.id);
                 sql.setInt(2, tagId);
-                if(sql.executeUpdate() <= 0) flag = false;
+                if (sql.executeUpdate() <= 0) flag = false;
             }
             return flag;
         } catch (SQLException e) {
@@ -208,7 +224,7 @@ public class Article extends BasicModel {
             PreparedStatement sql = getConn().prepareStatement(
                     "DELETE FROM `articles` WHERE `id`=?");
             sql.setInt(1, article_id);
-            if(sql.executeUpdate() > 0) return true;
+            if (sql.executeUpdate() > 0) return true;
             else return false;
         } catch (SQLException e) {
             System.out.println(String.format("Failed to delete article (article_id = %d), ", article_id));
@@ -217,31 +233,84 @@ public class Article extends BasicModel {
         }
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public int getUser_id() { return user_id; }
+    public int getUser_id() {
+        return user_id;
+    }
 
-    public void setUser_id(int user_id) { this.user_id = user_id; }
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
 
-    public String getTitle() { return title; }
+    public String getTitle() {
+        return title;
+    }
 
-    public void setTitle(String title) { this.title = title; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getContent() { return content; }
+    public String getContent() {
+        return content;
+    }
 
-    public void setContent(String content) { this.content = content; }
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-    public Timestamp getCreated_at() { return created_at; }
+    public String getCreated_at() {
+        return this.created_at.toString().split(" ")[0];
+    }
 
-    public void setCreated_at(Timestamp timestamp) { this.created_at = timestamp; }
+    public void setCreated_at(Timestamp timestamp) {
+        this.created_at = timestamp;
+        this.setCreated_at_precise(timestamp.toString().split("\\.")[0]);
+    }
 
-    public List<Tag> getTags() { return tags; }
+    public List<Tag> getTags() {
+        return tags;
+    }
 
-    public void setTags(List<Tag> tags) { this.tags = tags; }
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 
-    public List<Comment> getComments() { return comments; }
+    public List<Comment> getComments() {
+        return comments;
+    }
 
-    public void setComments(List<Comment> comments) { this.comments = comments; }
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public String getCreated_at_precise() {
+        return created_at_precise;
+    }
+
+    public void setCreated_at_precise(String created_at_precise) {
+        this.created_at_precise = created_at_precise;
+    }
 }

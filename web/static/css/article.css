@@ -120,6 +120,22 @@
     color: white;
 }
 
+.single-article-author {
+    align-self: flex-end;
+    color: #97c0ff;
+    text-decoration: none;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.single-article-author:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
 .new-comment-form {
     width: 80%;
     color: #ffffff;
@@ -134,10 +150,6 @@
     justify-content: flex-start;
     align-items: center;
     flex-shrink: 0;
-}
-
-.comment-right-container {
-
 }
 
 .new-comment-wrapper {

@@ -1,5 +1,6 @@
 package controller;
 
+import model.User;
 import model.UserInfo;
 import util.GlobalConfigHelper;
 
@@ -28,6 +29,9 @@ public class ProfileController extends HttpServlet {
             targetUid = Integer.parseInt(request.getAttribute("targetUid").toString());
             UserInfo userInfo = new UserInfo(properties);
             userInfo = userInfo.getUserInfoByUserId(targetUid);
+            User u = new User(properties);
+            User user = u.getUserByUserId(targetUid);
+            request.setAttribute("user", user);
             request.setAttribute("userInfo", userInfo);
             request.getSession().setAttribute("targetUid", targetUid);
         } else {

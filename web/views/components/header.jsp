@@ -33,7 +33,7 @@
         </div>
         <%--User--%>
         <c:if test="${ sessionScope.uid == null }">
-            <h4 class="header-logo">未登录</h4>
+            <a href="/" style="text-decoration: none;"><h4 class="header-logo">未登录</h4></a>
         </c:if>
         <c:if test="${ sessionScope.uid != null }">
             <% String avatarPath = new AvatarHelper().

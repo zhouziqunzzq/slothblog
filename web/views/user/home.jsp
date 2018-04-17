@@ -31,6 +31,11 @@
 <div class="flex-container-row content-container">
     <div class="flex-container-column left-container
         ${ sessionScope.uid != null ? "expanded left-container-no-shadow" : "" }">
+        <c:if test="${ articles.isEmpty() }">
+            <h3 style="color: #ffffff; align-self: center;">
+                个人博客空空如也...点击右上角的<i class="fa fa-plus"></i>写点什么吧！
+            </h3>
+        </c:if>
         <c:set var="articles" value="${ articles }" scope="request"/>
         <jsp:include page="../components/articles.jsp"/>
     </div>

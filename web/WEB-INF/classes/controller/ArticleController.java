@@ -2,6 +2,7 @@ package controller;
 
 import model.Article;
 import model.Tag;
+import model.User;
 import util.GlobalConfigHelper;
 import util.URLHelper;
 
@@ -75,7 +76,13 @@ public class ArticleController extends HttpServlet {
     ) throws ServletException, IOException {
         String lastURI = request.getSession().getAttribute("lastURI").toString();
         int article_id = Integer.parseInt(URLHelper.getRouterParam(lastURI, 4));
-        Article article = new Article(properties);
+        Article article = new Article(properties).getArticleById(article_id);
+        // Check user auth
+        if (article.getUser_id() != (int)request.getSession().getAttribute("uid")) {
+            response.sendRedirect(request.getHeader("referer"));
+            return;
+        }
+        article.setProperties(properties);
         boolean flag = article.delete(article_id);
 
         if(flag == false) {

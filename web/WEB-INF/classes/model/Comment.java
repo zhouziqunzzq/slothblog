@@ -80,8 +80,8 @@ public class Comment extends BasicModel {
         this.content = content;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+    public String getCreated_at() {
+        return this.created_at.toString().split(" ")[0];
     }
 
     public void setCreated_at(Timestamp created_at) {

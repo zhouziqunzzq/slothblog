@@ -37,6 +37,16 @@
         <%--Single article content--%>
         <div class="flex-container-column single-article-item blur">
             <h2 class="single-article-title">${ article.title }</h2>
+            <a href="/user/${ article.user_id }/profile" class="single-article-author">
+                作者：
+                <c:if test="${ article.userInfo != null && !article.userInfo.nickname.isEmpty() }">
+                    ${ article.userInfo.nickname }
+                </c:if>
+                <c:if test="${ (article.userInfo != null && article.userInfo.nickname.isEmpty()) ||
+                 (article.userInfo == null)}">
+                    ${ article.user.username }
+                </c:if>
+            </a>
             <p class="single-article-content">${ article.content }</p>
             <c:if test="${ article.tags != null }">
                 <div class="flex-container-row article-tags-container">
@@ -45,7 +55,7 @@
                     </c:forEach>
                 </div>
             </c:if>
-            <i class="">${ article.created_at }</i>
+            <i class="">${ article.created_at_precise }</i>
             <c:if test="${ sessionScope.uid != null && sessionScope.uid == sessionScope.targetUid }">
                 <form method="post" id="delete-article-form" class="delete-article-form" action="">
                     <input type="hidden" name="action" value="delete"/>
@@ -74,7 +84,9 @@
                 <c:set var="commentUid" value="${ comment.user_id }"/>
                 <div class="flex-container-row comment-container">
                     <div class="comment-avatar-wrapper">
-                        <img class="comment-avatar-auto" src="${ comment.avatar_path }"/>
+                        <a href="/user/${ comment.user_id }/profile">
+                            <img class="comment-avatar-auto" src="${ comment.avatar_path }"/>
+                        </a>
                     </div>
                     <div class="flex-container-column comment-right-container">
                         <div class="comment-bubble">
