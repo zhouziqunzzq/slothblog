@@ -76,6 +76,33 @@ public class Article extends BasicModel {
         }
     }
 
+    public List<Article> searchArticles(String keyword, int curPage, int perPage) {
+        try {
+            PreparedStatement sql = getConn().prepareStatement("SELECT * FROM `articles` " +
+                    "WHERE `articles`.`title` LIKE ? " +
+                    "OR `articles`.`content` LIKE ? " +
+                    "ORDER BY `created_at` DESC LIMIT ?,?");
+            sql.setString(1, '%' + keyword + '%');
+            sql.setString(2, '%' + keyword + '%');
+            sql.setInt(3, (curPage - 1) * perPage);
+            sql.setInt(4, perPage);
+            System.out.println(sql.toString());
+            ResultSet resultSet = sql.executeQuery();
+            List<Article> articles = new ArrayList<>();
+            Article article;
+            while (resultSet.next()) {
+                article = new Article(resultSet);
+                article.setTags(getTagsByArticleId(resultSet.getInt("id")));
+                articles.add(article);
+            }
+            return articles;
+        } catch (SQLException e) {
+            System.out.println("Failed to get articles");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public int insert() {
         try {
             PreparedStatement sql = getConn().prepareStatement(

@@ -85,7 +85,7 @@ public class ArticleController extends HttpServlet {
         article.setProperties(properties);
         boolean flag = article.delete(article_id);
 
-        if(flag == false) {
+        if(!flag) {
             request.setAttribute("error", "文章删除失败！");
             response.sendRedirect(String.format("/user/%d/article/%d",
                     (int) request.getSession().getAttribute("uid"), article_id));

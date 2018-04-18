@@ -8,6 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="flex-container-column index-article-container">
+    <c:if test="${ requestScope.articles.isEmpty() }">
+        <h3 style="color: #ffffff; align-self: center;">
+            空空如也...
+        </h3>
+    </c:if>
     <c:forEach items="${ requestScope.articles }" var="article">
         <div class="flex-container-column article-item blur">
             <a href="/user/${ article.user_id }/article/${ article.id }" class="article-wrapper">

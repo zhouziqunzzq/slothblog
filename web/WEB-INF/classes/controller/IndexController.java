@@ -22,11 +22,21 @@ public class IndexController extends HttpServlet {
     protected void doGet(
             HttpServletRequest request,
             HttpServletResponse response
-    ) {
+    ) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("UTF-8");
         try {
-            // Get latest articles
             Article article = new Article(properties);
-            List<Article> articles = article.getLatestArticles(1, perPageArticles);
+            List<Article> articles;
+            if (request.getParameter("keyword") == null) {
+                // Get latest articles
+                articles = article.getLatestArticles(1, perPageArticles);
+                request.getSession().removeAttribute("keyword");
+            } else {
+                // Search articles
+                articles = article.searchArticles(request.getParameter("keyword"),
+                        1, perPageArticles);
+                request.getSession().setAttribute("keyword", request.getParameter("keyword"));
+            }
             request.setAttribute("articles", articles);
             // Render index View
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(

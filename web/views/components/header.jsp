@@ -26,8 +26,10 @@
     <div class="flex-container-row header-right-container">
         <%--Search bar--%>
         <div class="flex-container-row search-container">
-            <form class="flex-container-row search-container">
-                <input type="text" class="search-input" placeholder="搜索文章或用户..."/>
+            <form class="flex-container-row search-container" method="get"
+                  action="/">
+                <input type="text" class="search-input" name="keyword" placeholder="搜索文章..."
+                       value="${ sessionScope.keyword }"/>
                 <button type="submit" class="search-button"><i class="fa fa-yelp"></i></button>
             </form>
         </div>
