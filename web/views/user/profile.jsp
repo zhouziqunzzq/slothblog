@@ -21,6 +21,7 @@
           rel="stylesheet" type="text/css"/>
     <link href="${pageContext.request.contextPath}/static/css/profile.css"
           rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.bootcss.com/cropperjs/1.3.5/cropper.min.css" rel="stylesheet">
 </head>
 <body>
 <%--Header--%>
@@ -39,6 +40,7 @@
                     <input type="radio" name="widget-tab" id="modify-password"/>
                     <input type="radio" name="widget-tab" id="user-info" checked="checked"/>
                     <input type="radio" name="widget-tab" id="edit-userinfo"/>
+                    <input type="radio" name="widget-tab" id="edit-avatar"/>
                     <div class="widget-title inline-ul">
                         <ul>
                             <li class="user-info">
@@ -47,6 +49,9 @@
                             <c:if test="${ sessionScope.uid == sessionScope.targetUid }">
                                 <li class="edit-userinfo">
                                     <label for="edit-userinfo">编辑个人信息</label>
+                                </li>
+                                <li class="edit-avatar">
+                                    <label for="edit-avatar">修改头像</label>
                                 </li>
                                 <li class="modify-password">
                                     <label for="modify-password">修改密码</label>
@@ -75,7 +80,23 @@
                                     </div>
                                 </form>
                             </ul>
-                            <c:if test="${ userInfo == null && sessionScope.uid == sessionScope.targetUid}">
+                            <ul class="edit-avatar-form">
+                                <form class="flex-container-row" method="post"
+                                      action="/user/${ sessionScope.uid }/profile" id="edit-avatar-form">
+                                    <input type="hidden" name="section" value="avatar"/>
+                                    <input type="hidden" id="avatar-base64" name="avatar-base64" value=""/>
+                                    <div class="flex-container-column">
+                                        <img id="image" style="width: 100%;"
+                                             src="/static/img/avatar/${ sessionScope.targetUid }">
+                                        <input type="file" class="" id="avatar-input" name="avatar"
+                                               accept="image/*">
+                                        <button type="submit" id="avatar-save"
+                                                class="basic-button">保存头像
+                                        </button>
+                                    </div>
+                                </form>
+                            </ul>
+                            <c:if test="${ userInfo == null}">
                                 <ul class="user-info-form">
                                     <p style="color: #ff8c8c;">个人信息为空，请编辑！</p>
                                 </ul>
@@ -108,7 +129,7 @@
                                     </form>
                                 </ul>
                             </c:if>
-                            <c:if test="${ userInfo != null && sessionScope.uid == sessionScope.targetUid}">
+                            <c:if test="${ userInfo != null}">
                                 <ul class="user-info-form">
                                     <div class="flex-container-row">
                                         <div class="profile-avatar-container">
@@ -199,5 +220,7 @@
 <%@include file="../include/basic-css.jsp" %>
 <%@include file="../include/basic-js.jsp" %>
 <script src="${pageContext.request.contextPath}/static/js/index.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/profile.js"></script>
+<script src="https://cdn.bootcss.com/cropperjs/1.3.5/cropper.js"></script>
 </body>
 </html>

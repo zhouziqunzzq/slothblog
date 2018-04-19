@@ -50,7 +50,8 @@
             </c:if>
         </div>
         <div class="flex-container-column register-container">
-            <i class="fa fa-handshake-o fa-5x main-icon"></i>
+            <%--<i class="fa fa-handshake-o fa-5x main-icon"></i>--%>
+            <img src="/static/img/ah.png" class="main-icon-img"/>
             <h2 class="intro-text">分享你的所想</h2>
             <h3 class="intro-text">现在就加入SlothBlog</h3>
             <%--Register Component--%>

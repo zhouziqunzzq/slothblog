@@ -102,13 +102,15 @@ a:hover {
 
 #modify-password:checked ~ .widget-title .modify-password,
 #user-info:checked ~ .widget-title .user-info,
-#edit-userinfo:checked ~ .widget-title .edit-userinfo {
+#edit-userinfo:checked ~ .widget-title .edit-userinfo,
+#edit-avatar:checked ~ .widget-title .edit-avatar {
     background: rgb(25, 66, 130);
 }
 
 #modify-password:checked ~ .widget-box .modify-password-form,
 #user-info:checked ~ .widget-box .user-info-form,
-#edit-userinfo:checked ~ .widget-box .edit-userinfo-form {
+#edit-userinfo:checked ~ .widget-box .edit-userinfo-form,
+#edit-avatar:checked ~ .widget-box .edit-avatar-form {
     display: block
 }
 
@@ -138,4 +140,13 @@ ul {
 .user-blog:hover {
     color: #ffffff;
     text-decoration: underline;
+}
+
+.cropper-crop-box, .cropper-view-box {
+    border-radius: 50%;
+}
+
+.cropper-view-box {
+    box-shadow: 0 0 0 1px #39f;
+    outline: 0;
 }
