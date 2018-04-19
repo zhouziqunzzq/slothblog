@@ -161,6 +161,8 @@ public class AuthController extends HttpServlet {
             HttpServletResponse response
     ) throws IOException {
         request.getSession(true).removeAttribute("uid");
+        request.getSession(true).removeAttribute("targetUid");
+        cleanFlash(request);
         response.sendRedirect("/");
     }
 
